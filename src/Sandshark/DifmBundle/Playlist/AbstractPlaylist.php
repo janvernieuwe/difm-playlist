@@ -131,7 +131,7 @@ class AbstractPlaylist
     protected function getHostName($premium)
     {
         $subDomain = $premium ? 'prem' : 'pub';
-        // Public servers seem to range from 1-9, premium from 1-4
+        // Public servers seem to range from 1-8, premium from 1-4
         $id = $premium ? rand(1, 4) : rand(1, 8);
         return sprintf('%s%d.di.fm', $subDomain, $id);
     }
