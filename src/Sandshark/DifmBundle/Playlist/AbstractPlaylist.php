@@ -98,6 +98,11 @@ class AbstractPlaylist
         return $this;
     }
 
+    /**
+     * Get the public or premium stream url depending on the settings
+     * @param Channel $channel
+     * @return string
+     */
     public function getStreamUrl(Channel $channel)
     {
         if ($this->premium) {
