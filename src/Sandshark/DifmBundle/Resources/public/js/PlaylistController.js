@@ -27,7 +27,6 @@
         });
         $(self.element.premium).bind('change', function () {
             self.premium = parseInt($(self.element.checked_premium).val()) === 1;
-            console.log(self.premium);
             self.updatePermaLink();
         });
         $("#generateBtn").click(function () {
