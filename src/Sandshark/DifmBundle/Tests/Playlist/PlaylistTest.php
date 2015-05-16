@@ -43,12 +43,13 @@ class PlaylistTest extends TestCase
     public function testInvalidListenKeyNull()
     {
         $this->setExpectedException('InvalidArgumentException');
-        new Pls($this->channels, null);
+        $pls = new Pls($this->channels);
+        $pls->setListenKey(null);
     }
 
     public function testInvalidChannelCollectionEmpty()
     {
         $this->setExpectedException('InvalidArgumentException');
-        new Pls($this->noChannels, '');
+        new Pls($this->noChannels);
     }
 }

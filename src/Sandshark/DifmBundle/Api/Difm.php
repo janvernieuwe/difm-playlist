@@ -80,6 +80,7 @@ class Difm
     public function getChannels()
     {
         $channels = $this->get(self::CHANNELS);
+        //var_dump($channels);
         $channelCollection = new ChannelCollection();
         $channelHydrator = new ChannelHydrator();
         foreach ($channels as $data) {

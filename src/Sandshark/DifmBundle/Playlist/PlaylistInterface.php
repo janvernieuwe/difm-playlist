@@ -9,6 +9,7 @@
 namespace Sandshark\DifmBundle\Playlist;
 
 use Sandshark\DifmBundle\Collection\ChannelCollection;
+use Sandshark\DifmBundle\Entity\Channel;
 
 /**
  * Interface PlaylistInterface
@@ -21,7 +22,7 @@ interface PlaylistInterface
      * @param ChannelCollection $channels
      * @param string $listenKey
      */
-    public function __construct(ChannelCollection $channels, $listenKey = '');
+    public function __construct(ChannelCollection $channels);
 
     /**
      * Generate the playlist and return the string
@@ -40,4 +41,29 @@ interface PlaylistInterface
      * @return mixed
      */
     public function getFileName();
+
+    /**
+     * Set the listen key
+     * @return mixed
+     */
+    public function setListenKey($listenKey);
+
+    /**
+     * Set premium toggle
+     * @return mixed
+     */
+    public function setPremium($premium);
+
+    /**
+     * Set the streaming quality
+     * @return mixed
+     */
+    public function setQuality($quality);
+
+    /**
+     * Get the stream url
+     * @return mixed
+     */
+    public function getStreamUrl(Channel $channel);
+
 }

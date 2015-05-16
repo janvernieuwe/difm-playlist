@@ -1,13 +1,16 @@
 (function () {
     PlaylistController = function () {
         this.element = {
-            'listenKey':    ":input[name='listenKey']",
-            'type':         ":input[name='type']",
-            'checked_type': ":input[name='type']:checked",
-            'permalink':    "#permaLink"
-        }
+            'listenKey':       ":input[name='listenKey']",
+            'type':            ":input[name='type']",
+            'checked_type':    ":input[name='type']:checked",
+            'premium':         ":input[name='premium']",
+            'checked_premium': ":input[name='premium']:checked",
+            'permalink':       "#permaLink"
+        };
         this.listenKey = '3x4mpl3';
         this.type = 'pls';
+        this.premium = true;
         this.updatePermaLink();
         this.registerHandlers();
     };
@@ -22,13 +25,19 @@
             self.type = $(self.element.checked_type).val();
             self.updatePermaLink();
         });
+        $(self.element.premium).bind('change', function () {
+            self.premium = parseInt($(self.element.checked_premium).val()) === 1;
+            console.log(self.premium);
+            self.updatePermaLink();
+        });
         $("#generateBtn").click(function () {
             window.location = self.getUri();
         })
     };
 
     PlaylistController.prototype.getUri = function () {
-        return '/' + this.listenKey + '.' + this.type;
+        var premium = this.premium ? 'premium' : 'public';
+        return '/' + premium + '/' + this.listenKey + '.' + this.type;
     };
 
     PlaylistController.prototype.filterKey = function () {
@@ -41,6 +50,7 @@
     PlaylistController.prototype.updatePermaLink = function () {
         $(this.element.permalink)
             .attr('href', this.getUri())
-            .html(window.location.href + this.getUri().substr(1));
+            .html(
+            window.location.href + this.getUri().substr(1));
     };
 })();

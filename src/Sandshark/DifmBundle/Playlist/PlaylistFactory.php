@@ -21,15 +21,14 @@ class PlaylistFactory
     /**
      * @param string $format
      * @param ChannelCollection $channels
-     * @param string $key
      * @return M3u|Pls
      */
-    public static function create($format, ChannelCollection $channels, $key = '')
+    public static function create($format, ChannelCollection $channels)
     {
         switch ($format) {
-            case 'pls': $playlist = new Pls($channels, $key);
+            case 'pls': $playlist = new Pls($channels);
                 break;
-            case 'm3u': $playlist = new M3u($channels, $key);
+            case 'm3u': $playlist = new M3u($channels);
                 break;
             default:
                 throw new NotFoundHttpException(sprintf('Invalid format %s', $format));

@@ -19,14 +19,18 @@ class DefaultController extends Controller
      * Class constructor
      * @param Request $request
      * @param string $key
+     * @param string $premium
      * @return Response
      */
-    public function renderAction(Request $request, $key)
+    public function renderAction(Request $request, $key, $premium = 'public')
     {
+        $premium = $premium === 'premium';
         $key = preg_replace('/[^\da-z]/', '', $key);
         $format = $request->get('_format');
         $channels = $this->get('sandshark_difm.api')->getChannels();
-        $playlist = PlaylistFactory::create($format, $channels, $key);
+        $playlist = PlaylistFactory::create($format, $channels)
+            ->setListenKey($key)
+            ->setPremium($premium);
         return new Response(
             $playlist->render(),
             200,

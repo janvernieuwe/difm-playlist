@@ -31,10 +31,9 @@ class Pls extends AbstractPlaylist implements PlaylistInterface
         foreach ($this->channels as $channel) {
             $i++;
             $lines[] = sprintf(
-                'File%d=http://prem2.di.fm:80/%s_hi?%s',
+                'File%d=%s',
                 $i,
-                $channel->getChannelKey(),
-                $this->listenKey
+                $this->getStreamUrl($channel)
             );
             $lines[] = sprintf('Title%d=%s', $i, $channel->getChannelName());
             $lines[] = sprintf('Length%d=-1', $i);
