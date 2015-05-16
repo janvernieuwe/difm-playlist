@@ -29,7 +29,8 @@
                 your favorites?
 
                 Then this might be a solution for you.
-                I have created a little script that generates <strong>.pls</strong> and <strong>.m3u</strong> playlists by entering your listen key.
+                I have created a little script that generates <strong>.pls</strong> and <strong>.m3u</strong> playlists
+                by entering your listen key.
                 The data is retrieved from a di.fm api, so the channels will always be up to date!
             </p>
 
@@ -50,7 +51,9 @@ Next update: {{ nextUpdate }}">Currently <span class="badge">{{ channelCount }}<
                                 <a id="permaLink" href=""></a>
                             </div>
                             <div class="form-group">
-                                <label for="listenKey">DI.fm Listen key</label>
+                                <label for="listenKey">DI.fm Listen key <span class="glyphicon glyphicon-question-sign text-info"
+                                                                              title="Find your listen key in under Player Settings"> </span>
+                                </label>
                                 <input id="listenKey" name="listenKey" class="pull-right input-difm form-control"
                                        placeholder="3x4mpl3"/>
                             </div>
@@ -82,6 +85,8 @@ Next update: {{ nextUpdate }}">Currently <span class="badge">{{ channelCount }}<
                                 <button id="generateBtn" class="btn btn-primary">
                                     <span class="glyphicon glyphicon-music"> Download</span>
                                 </button>
+                                <br/><br/>
+                                <a href="http://www.di.fm/" target="_blank">Create free di.fm account</a>
                             </div>
                         </div>
                     </div>
@@ -93,10 +98,18 @@ Next update: {{ nextUpdate }}">Currently <span class="badge">{{ channelCount }}<
                         </div>
                         <div class="panel-body home-block">
                             <ul class="list-group">
-                                <li class="list-group-item"><span class="glyphicon glyphicon-wrench"></span> Make prettier interface</li>
-                                <li class="list-group-item"><span class="glyphicon glyphicon-wrench"></span> Add quality options</li>
-                                <li class="list-group-item"><span class="glyphicon glyphicon-wrench"></span> Add support for other audioaddict sites</li>
-                                <li class="list-group-item"><span class="glyphicon glyphicon-wrench"></span> Listen to your feedback (see github)</li>
+                                <li class="list-group-item"><span class="glyphicon glyphicon-wrench"></span> Make
+                                    prettier interface
+                                </li>
+                                <li class="list-group-item"><span class="glyphicon glyphicon-wrench"></span> Add quality
+                                    options
+                                </li>
+                                <li class="list-group-item"><span class="glyphicon glyphicon-wrench"></span> Add support
+                                    for other audioaddict sites
+                                </li>
+                                <li class="list-group-item"><span class="glyphicon glyphicon-wrench"></span> Listen to
+                                    your feedback (see github)
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -104,9 +117,9 @@ Next update: {{ nextUpdate }}">Currently <span class="badge">{{ channelCount }}<
             </div>
             <small class="text-center col-lg-12 col-sm-12 text-info footer">
                 Copyright &copy; 2015 <a href="http://sandshark.be">sandshark.be</a>
-                 |
+                |
                 <a href="https://github.com/janvernieuwe/difm-playlist/blob/master/LICENSE">MIT Licence</a>
-                 |
+                |
                 <a href="https://github.com/janvernieuwe/difm-playlist"
                    target="_blank">github page</a>
             </small>
