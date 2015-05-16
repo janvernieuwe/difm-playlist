@@ -1,7 +1,7 @@
 sandshark_difm_homepage:
     path:     /
     defaults:
-        _controller: FrameworkBundle:Template:template
+        _controller: SandsharkDifmBundle:Default:index
         template: SandsharkDifmBundle:Default:index.html.twig
 sandshark_difm_render:
     path:     /{premium}/{key}.{_format}

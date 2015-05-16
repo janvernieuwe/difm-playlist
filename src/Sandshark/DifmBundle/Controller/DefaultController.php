@@ -3,6 +3,7 @@
 namespace Sandshark\DifmBundle\Controller;
 
 
+use Sandshark\DifmBundle\Api\Difm;
 use Sandshark\DifmBundle\Playlist\PlaylistFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,6 +15,21 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class DefaultController extends Controller
 {
+
+    public function indexAction()
+    {
+        $difm = $this->get('sandshark_difm.api');
+        $channels = $difm->getChannels();
+        $cacheDate = $difm->getChannelsCacheDate();
+        return $this->render(
+            '@SandsharkDifm/Default/index.html.twig',
+            array(
+                'channelCount' => $channels->count(),
+                'cacheDate'    => $cacheDate,
+                'nextUpdate'   => date('Y-m-d H:i:s', strtotime($cacheDate) + Difm::CACHE_LIFETIME)
+            )
+        );
+    }
 
     /**
      * Class constructor
@@ -27,7 +43,8 @@ class DefaultController extends Controller
         $premium = $premium === 'premium';
         $key = preg_replace('/[^\da-z]/', '', $key);
         $format = $request->get('_format');
-        $channels = $this->get('sandshark_difm.api')->getChannels();
+        $channels = $this->get('sandshark_difm.api')
+            ->getChannels();
         $playlist = PlaylistFactory::create($format, $channels)
             ->setListenKey($key)
             ->setPremium($premium);

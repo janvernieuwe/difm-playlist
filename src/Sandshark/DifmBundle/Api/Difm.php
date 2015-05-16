@@ -56,6 +56,35 @@ class Difm
     }
 
     /**
+     * Get cache statistics
+     * @return array|null
+     */
+    public function getChannelsCacheDate()
+    {
+        if ($this->cache->contains(self::CHANNELS . '_timestamp')) {
+            return $this->cache->fetch(self::CHANNELS . '_timestamp');
+        }
+        return date('Y-m-d H:i:s');
+    }
+
+    /**
+     * Get the collection of channels
+     * @return \Sandshark\DifmBundle\Collection\ChannelCollection
+     */
+    public function getChannels()
+    {
+        $channels = $this->get(self::CHANNELS);
+        $channelCollection = new ChannelCollection();
+        $channelHydrator = new ChannelHydrator();
+        foreach ($channels as $data) {
+            $channel = $channelHydrator->hydrate($data);
+            $channelCollection->offsetSet($channel->getChannelKey(), $channel);
+        }
+        $channelCollection->ksort();
+        return $channelCollection;
+    }
+
+    /**
      * Access api resources
      * Cached for CACHE_LIFETIME seconds
      * @param string $key
@@ -70,24 +99,7 @@ class Difm
             ->get($key)
             ->getBody();
         $this->cache->save($key, $response, self::CACHE_LIFETIME);
+        $this->cache->save($key . '_timestamp', date('Y-m-d H:i:s'), self::CACHE_LIFETIME);
         return json_decode($response);
-    }
-
-    /**
-     * Get the collection of channels
-     * @return \Sandshark\DifmBundle\Collection\ChannelCollection
-     */
-    public function getChannels()
-    {
-        $channels = $this->get(self::CHANNELS);
-        //var_dump($channels);
-        $channelCollection = new ChannelCollection();
-        $channelHydrator = new ChannelHydrator();
-        foreach ($channels as $data) {
-            $channel = $channelHydrator->hydrate($data);
-            $channelCollection->offsetSet($channel->getChannelKey(), $channel);
-        }
-        $channelCollection->ksort();
-        return $channelCollection;
     }
 }
