@@ -1,0 +1,3 @@
+sandshark_difm:
+    resource: "@SandsharkDifmBundle/Resources/config/routing.yml"
+    prefix:   /

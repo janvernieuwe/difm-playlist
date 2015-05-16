@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('bundles/sandsharkdifm/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/sandsharkdifm/css/difm.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('bundles/sandsharkdifm/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('bundles/sandsharkdifm/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bundles/sandsharkdifm/js/PlaylistController.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            new PlaylistController();
+        });
+    </script>
+{% endblock %}
+
+{% block title %}DI.fm all channels playlist{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="jumbotron">
+            <h1>DI.fm download all channels playlist</h1>
+
+            <p>
+                Also want a <a href="http://di.fm" target="_blank">di.fm</a> playlist of all channels, without having to add them all to
+                your favorites?
+
+                Then this might be a solution for you.
+                I have created a little script that generates .pls and .m3u playlists by entering your listen key.
+                The data is retrieved from a di.fm api, so the channels will always be up to date!
+            </p>
+
+            <div class="row">
+                <div class="col-lg-5 col-sm-12 home-block">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Download playlist</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="permaLink">URI / Bookmark</label>
+                                <a id="permaLink" href="" class="pull-right"></a>
+                            </div>
+                            <div class="form-group">
+                                <label for="listenKey">DI.fm Listen key</label>
+                                <input id="listenKey" name="listenKey" class="pull-right input-difm form-control" placeholder="3x4mpl3"/>
+                            </div>
+                            <div class="form-group">
+                                <div id="type" class="btn-group btn-group-justified pull-right" data-toggle="buttons">
+                                    <label class="btn btn-default active">
+                                        <input type="radio" name="type" value="pls" id="pls" autocomplete="off"> <strong>.pls</strong>
+                                    </label>
+                                    <label class="btn btn-default">
+                                        <input type="radio" name="type" value="m3u" id="m3u" autocomplete="off"> <strong>.m3u</strong>
+                                    </label>
+                                </div>
+                                &nbsp;
+                            </div>
+                            <br/>
+                            <div class="form-group">
+                                <button id="generateBtn" class="btn btn-primary">
+                                    <span class="glyphicon glyphicon-music"> Download</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+{#
+                <div class="well well-sm col-lg-5 col-sm-12 home-block">
+                    <h2>Download</h2>
+                    <div class="form-group">
+                        <label for="permaLink">URI / Bookmark</label>
+                        <a id="permaLink" href="" class="pull-right"></a>
+                    </div>
+                    <div class="form-group">
+                        <label for="listenKey">DI.fm Listen key</label>
+                        <input id="listenKey" name="listenKey" class="pull-right input-difm form-control" placeholder="3x4mpl3"/>
+                    </div>
+                    <div class="form-group">
+                        <div id="type" class="btn-group btn-group-justified pull-right" data-toggle="buttons">
+                            <label class="btn btn-default active">
+                                <input type="radio" name="type" value="pls" id="pls" autocomplete="off"> <strong>.pls</strong>
+                            </label>
+                            <label class="btn btn-default">
+                                <input type="radio" name="type" value="m3u" id="m3u" autocomplete="off"> <strong>.m3u</strong>
+                            </label>
+                        </div>
+                        &nbsp;
+                    </div>
+                    <br/>
+                    <div class="form-group">
+                        <button id="generateBtn" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-music"> Download</span>
+                        </button>
+                    </div>
+                </div>#}
+                <div class="col-lg-2 col-sm-12"></div>
+                <div class="well well-sm col-lg-5 col-sm-12 home-block">
+                    <h2>Roadmap</h2>
+                    <p>
+                        <ul>
+                            <li>Release source code</li>
+                            <li>Make prettier interface</li>
+                            <li>Add support for other audioaddict sites</li>
+                            <li>Add a non-premium option</li>
+                            <li>Listen to your feedback</li>
+                        </ul>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
