@@ -38,11 +38,7 @@
                 <div class="col-lg-6 col-sm-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <h3 class="panel-title">
-                                Download playlist
-                                <span class="pull-right" title="Cached on:      {{ diCacheDate }}
-Next update: {{ diNextUpdate }}">Currently <span class="badge">{{ diChannelCount }}</span> channels</span>
-                            </h3>
+                            <h3 class="panel-title">Download playlist</h3>
                         </div>
                         <div class="panel-body home-block">
                             <div class="form-group">
@@ -86,11 +82,21 @@ Next update: {{ diNextUpdate }}">Currently <span class="badge">{{ diChannelCount
                                 <div id="has_premium" class="btn-group btn-group-justified" data-toggle="buttons">
                                     <label class="btn btn-default active">
                                         <input type="radio" name="site" value="difm" id="difm" checked>
-                                        <strong>DI.fm</strong>
+                                        <strong>
+                                            DI.fm
+                                        </strong>
+                                        <span class="badge" title="Channel Count;
+Cached on:      {{ diCacheDate }}
+Next update: {{ diNextUpdate }}"># {{ diChannelCount }}</span>
                                     </label>
                                     <label class="btn btn-default">
                                         <input type="radio" name="site" value="radiotunes" id="radiotunes">
-                                        <strong>RadioTunes</strong>
+                                        <strong>
+                                            RadioTunes
+                                        </strong>
+                                        <span class="badge" title="Channel Count;
+Cached on:      {{ rtCacheDate }}
+Next update: {{ rtNextUpdate }}"># {{ rtChannelCount }}</span>
                                     </label>
                                     {#
                                     <label class="btn btn-default">

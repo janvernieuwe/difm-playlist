@@ -96,8 +96,8 @@ class Client
     {
         $responseKey = $this->getCacheKey($key);
         $timestampKey = $this->getCacheKey($key . '_timestamp');
-        if ($this->cache->contains($responseKey) && false) {
-            return json_decode($this->cache->fetch($key));
+        if ($this->cache->contains($responseKey)) {
+            return json_decode($this->cache->fetch($responseKey));
         }
         $response = (string)$this->api
             ->get($key)
