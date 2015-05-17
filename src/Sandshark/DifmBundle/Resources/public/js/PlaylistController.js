@@ -6,6 +6,8 @@
             'checked_type':    ":input[name='type']:checked",
             'premium':         ":input[name='premium']",
             'checked_premium': ":input[name='premium']:checked",
+            'checked':         ":input[type='radio']:checked",
+            'not_checked':     ":input[type='radio']:not(checked)",
             'permalink':       "#permaLink"
         };
         this.listenKey = '3x4mpl3';
@@ -13,6 +15,7 @@
         this.premium = true;
         this.updatePermaLink();
         this.registerHandlers();
+        this.updateBtns();
     };
 
     PlaylistController.prototype.registerHandlers = function () {
@@ -24,14 +27,42 @@
         $(self.element.type).bind('change', function () {
             self.type = $(self.element.checked_type).val();
             self.updatePermaLink();
+            self.updateBtns();
         });
         $(self.element.premium).bind('change', function () {
             self.premium = parseInt($(self.element.checked_premium).val()) === 1;
             self.updatePermaLink();
+            self.updateBtns();
         });
         $("#generateBtn").click(function () {
             window.location = self.getUri();
         })
+    };
+
+    PlaylistController.prototype.updateBtns = function () {
+        var self = this;
+        $(this.element.not_checked)
+            .each(function (i, el) {
+                self.setUnChecked(el);
+            });
+        $(this.element.checked)
+            .each(function (i, el) {
+                self.setChecked(el);
+            });
+    };
+
+    PlaylistController.prototype.setChecked = function (el) {
+        $(el)
+            .closest('label')
+            .removeClass('btn-default')
+            .addClass('btn-primary');
+    };
+
+    PlaylistController.prototype.setUnChecked = function (el) {
+        $(el)
+            .closest('label')
+            .removeClass('btn-primary')
+            .addClass('btn-default');
     };
 
     PlaylistController.prototype.getUri = function () {
