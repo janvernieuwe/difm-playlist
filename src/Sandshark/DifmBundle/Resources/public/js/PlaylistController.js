@@ -12,7 +12,7 @@
         };
         this.listenKey = '3x4mpl3';
         this.type = 'pls';
-        this.premium = true;
+        this.premium = false;
         this.updatePermaLink();
         this.registerHandlers();
         this.updateBtns();

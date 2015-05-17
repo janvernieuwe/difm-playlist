@@ -67,7 +67,7 @@ class AbstractPlaylist
      */
     public function setListenKey($listenKey)
     {
-        if (!is_string($listenKey) || empty($listenKey)) {
+        if (!is_string($listenKey)) {
             throw new InvalidArgumentException(sprintf('Invalid listen key \'%s\'', $listenKey));
         }
         $this->listenKey = $listenKey;

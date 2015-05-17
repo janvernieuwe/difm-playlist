@@ -42,6 +42,7 @@ class DefaultController extends Controller
     {
         $premium = $premium === 'premium';
         $key = preg_replace('/[^\da-z]/', '', $key);
+        $key = $key === '3x4mpl3' ? '' : $key;
         $format = $request->get('_format');
         $channels = $this->get('sandshark_difm.api')
             ->getChannels();
