@@ -4,5 +4,5 @@ sandshark_difm_homepage:
         _controller: SandsharkDifmBundle:Default:index
         template: SandsharkDifmBundle:Default:index.html.twig
 sandshark_difm_render:
-    path:     /{premium}/{key}.{_format}
-    defaults: { _controller: SandsharkDifmBundle:Default:render, key: '', _format: 'pls', premium: 'public' }
+    path:     /{site}/{premium}/{key}.{_format}
+    defaults: { _controller: SandsharkDifmBundle:Default:render, site: 'difm', key: '', _format: 'pls', premium: 'public' }

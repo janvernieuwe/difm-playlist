@@ -11,3 +11,21 @@ services:
     sandshark_difm.api:
         class: Sandshark\DifmBundle\Api\Client
         arguments: [@sandshark_difm.guzzle, @sandshark_difm.cache, @sandshark_difm.channel_hydrator]
+    sandshark_radiotunes.guzzle:
+        class: GuzzleHttp\Client
+        arguments: [{base_url: %radiotunes.base_url%, stream: false}]
+    sandshark_radiotunes.api:
+        class: Sandshark\DifmBundle\Api\Client
+        arguments: [@sandshark_radiotunes.guzzle, @sandshark_difm.cache, @sandshark_difm.channel_hydrator]
+    sandshark_jazzradio.guzzle:
+        class: GuzzleHttp\Client
+        arguments: [{base_url: %jazzradio.base_url%, stream: false}]
+    sandshark_jazzradio.api:
+        class: Sandshark\DifmBundle\Api\Client
+        arguments: [@sandshark_jazzradio.guzzle, @sandshark_difm.cache, @sandshark_difm.channel_hydrator]
+    sandshark_rockradio.guzzle:
+        class: GuzzleHttp\Client
+        arguments: [{base_url: %rockradio.base_url%, stream: false}]
+    sandshark_rockradio.api:
+        class: Sandshark\DifmBundle\Api\Client
+        arguments: [@sandshark_rockradio.guzzle, @sandshark_difm.cache, @sandshark_difm.channel_hydrator]

@@ -39,6 +39,10 @@ class DifmWebTestCase extends WebTestCase
             ->method('get')
             ->willReturn($response);
 
+        $guzzle
+            ->method('getBaseUrl')
+            ->willReturn('http://listen.di.fm');
+
         $client = parent::createClient();
         $container = $client->getContainer();
         $container->set('sandshark_difm.guzzle', $guzzle);

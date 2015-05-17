@@ -28,6 +28,7 @@ class AbstractPlaylist
      * @var ChannelCollection
      */
     protected $channels;
+
     /**
      * Private premium key
      * @var string
@@ -45,6 +46,12 @@ class AbstractPlaylist
      * @var string
      */
     protected $quality = '_aac';
+
+    /**
+     * Site for filename
+     * @var string
+     */
+    protected $site;
 
     /**
      * Class constructor
@@ -84,7 +91,7 @@ class AbstractPlaylist
         preg_match('/\w*$/i', $className, $extension);
         $extension = strtolower($extension[0]);
         $key = empty($this->listenKey) ? '' : "_$this->listenKey";
-        return sprintf('difm_%s%s.%s', date('Y-m-d'), $key, $extension);
+        return sprintf('%s_%s%s.%s', date('Y-m-d'), $this->site, $key, $extension);
     }
 
     /**
@@ -121,7 +128,7 @@ class AbstractPlaylist
         $key = is_null($this->listenKey) ? '' : '?' . $this->listenKey;
         return sprintf(
             'http://%s:80/%s_%s%s',
-            $this->getHostName($this->premium),
+            $this->getHostName($channel, $this->premium),
             $channel->getChannelKey(),
             'hi',
             $key
@@ -130,15 +137,20 @@ class AbstractPlaylist
 
     /**
      * Get hostname depending on the premium toggle
+     * @param Channel $channel
      * @param bool $premium
      * @return string
      */
-    protected function getHostName($premium)
+    protected function getHostName(Channel $channel, $premium)
     {
-        $subDomain = $premium ? 'prem' : 'pub';
-        // Public servers seem to range from 1-8, premium from 1-4
-        $id = $premium ? rand(1, 4) : rand(1, 8);
-        return sprintf('%s%d.di.fm', $subDomain, $id);
+        $domain = $channel->getDomain();
+        $sub = $premium ? 'prem' : 'pub';
+        if ($domain === 'di.fm') {
+            $id = $premium ? rand(1, 4) : rand(1, 8);
+        } else {
+            $id = $premium ? rand(1, 4) : rand(1, 6);
+        }
+        return sprintf('%s%d.%s', $sub, $id, $domain);
     }
 
     /**
@@ -147,13 +159,14 @@ class AbstractPlaylist
      */
     public function getPublicStreamUrl(Channel $channel)
     {
-        $channelKey = preg_replace('/[^\d\w]/', '', $channel->getChannelName());
-        $channelKey = strtolower($channelKey);
         $listenKey = is_null($this->listenKey) ? '' : '?' . $this->listenKey;
+        $listenPrefix = $channel->getDomain();
+        $listenPrefix = preg_replace('/\..*$/', '', $listenPrefix);
         return sprintf(
-            'http://%s/di_%s_%s%s',
-            $this->getHostName($this->premium),
-            $channelKey,
+            'http://%s/%s_%s_%s%s',
+            $this->getHostName($channel, $this->premium),
+            $listenPrefix,
+            $channel->getChannelKey(),
             'aac',
             $listenKey
         );
@@ -167,6 +180,17 @@ class AbstractPlaylist
     public function setQuality($quality)
     {
         $this->quality = $quality;
+        return $this;
+    }
+
+    /**
+     * Set site for filename
+     * @param string $site
+     * @return $this
+     */
+    public function setSite($site)
+    {
+        $this->site = (string)$site;
         return $this;
     }
 }

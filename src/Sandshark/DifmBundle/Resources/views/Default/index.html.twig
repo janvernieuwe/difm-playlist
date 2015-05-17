@@ -40,8 +40,8 @@
                         <div class="panel-heading">
                             <h3 class="panel-title">
                                 Download playlist
-                                <span class="pull-right" title="Cached on:      {{ cacheDate }}
-Next update: {{ nextUpdate }}">Currently <span class="badge">{{ channelCount }}</span> channels</span>
+                                <span class="pull-right" title="Cached on:      {{ diCacheDate }}
+Next update: {{ diNextUpdate }}">Currently <span class="badge">{{ diChannelCount }}</span> channels</span>
                             </h3>
                         </div>
                         <div class="panel-body home-block">
@@ -51,11 +51,24 @@ Next update: {{ nextUpdate }}">Currently <span class="badge">{{ channelCount }}<
                                 <a id="permaLink" href=""></a>
                             </div>
                             <div class="form-group">
-                                <label for="listenKey">DI.fm Listen key <span class="glyphicon glyphicon-question-sign text-info"
-                                                                              title="Find your listen key in under Player Settings"> </span>
+                                <label for="listenKey">DI.fm Listen key <span
+                                            class="glyphicon glyphicon-question-sign text-info"
+                                            title="Find your listen key in under Player Settings"> </span>
                                 </label>
                                 <input id="listenKey" name="listenKey" class="pull-right input-difm form-control"
                                        placeholder="3x4mpl3"/>
+                            </div>
+                            <div class="form-group">
+                                <div id="has_premium" class="btn-group btn-group-justified" data-toggle="buttons">
+                                    <label class="btn btn-default active">
+                                        <input type="radio" name="premium" value="0" id="free" checked>
+                                        <strong>Free</strong>
+                                    </label>
+                                    <label class="btn btn-default">
+                                        <input type="radio" name="premium" value="1" id="premium">
+                                        <strong>Premium</strong>
+                                    </label>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <div id="type" class="btn-group btn-group-justified" data-toggle="buttons">
@@ -72,13 +85,23 @@ Next update: {{ nextUpdate }}">Currently <span class="badge">{{ channelCount }}<
                             <div class="form-group">
                                 <div id="has_premium" class="btn-group btn-group-justified" data-toggle="buttons">
                                     <label class="btn btn-default active">
-                                        <input type="radio" name="premium" value="0" id="free" checked>
-                                        <strong>Free</strong>
+                                        <input type="radio" name="site" value="difm" id="difm" checked>
+                                        <strong>DI.fm</strong>
                                     </label>
                                     <label class="btn btn-default">
-                                        <input type="radio" name="premium" value="1" id="premium">
-                                        <strong>Premium</strong>
+                                        <input type="radio" name="site" value="radiotunes" id="radiotunes">
+                                        <strong>RadioTunes</strong>
                                     </label>
+                                    {#
+                                    <label class="btn btn-default">
+                                        <input type="radio" name="site" value="jazzradio" id="radiotunes">
+                                        <strong>JazzRadio</strong>
+                                    </label>
+                                    <label class="btn btn-default">
+                                        <input type="radio" name="site" value="rockradio" id="radiotunes">
+                                        <strong>RockRadio</strong>
+                                    </label>
+                                    #}
                                 </div>
                             </div>
                             <div class="form-group">

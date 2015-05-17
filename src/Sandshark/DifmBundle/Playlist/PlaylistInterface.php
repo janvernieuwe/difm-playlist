@@ -61,6 +61,13 @@ interface PlaylistInterface
     public function setQuality($quality);
 
     /**
+     * Set the site for the filename
+     * @param string $site
+     * @return
+     **/
+    public function setSite($site);
+
+    /**
      * Get the stream url
      * @return mixed
      */

@@ -3,7 +3,9 @@
 namespace Sandshark\DifmBundle\Controller;
 
 
+use Psr\Log\InvalidArgumentException;
 use Sandshark\DifmBundle\Api\Client;
+use Sandshark\DifmBundle\Api\CollisionResolver;
 use Sandshark\DifmBundle\Playlist\PlaylistFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,17 +18,29 @@ use Symfony\Component\HttpFoundation\Response;
 class DefaultController extends Controller
 {
 
+    /**
+     * Display index page
+     * @return Response
+     */
     public function indexAction()
     {
         $difm = $this->get('sandshark_difm.api');
-        $channels = $difm->getChannels();
-        $cacheDate = $difm->getChannelsCacheDate();
+        $diChannels = $difm->getChannels();
+        $diCacheDate = $difm->getChannelsCacheDate();
+
+        $radioTunes = $this->get('sandshark_radiotunes.api');
+        $rtChannels = $radioTunes->getChannels();
+        $rtCacheDate = $radioTunes->getChannelsCacheDate();
+
         return $this->render(
             '@SandsharkDifm/Default/index.html.twig',
             array(
-                'channelCount' => $channels->count(),
-                'cacheDate'    => $cacheDate,
-                'nextUpdate'   => date('Y-m-d H:i:s', strtotime($cacheDate) + Client::CACHE_LIFETIME)
+                'diChannelCount' => $diChannels->count(),
+                'diCacheDate'    => $diCacheDate,
+                'diNextUpdate'   => date('Y-m-d H:i:s', strtotime($diCacheDate) + Client::CACHE_LIFETIME),
+                'rtChannelCount' => $rtChannels->count(),
+                'rtCacheDate'    => $rtCacheDate,
+                'rtNextUpdate'   => date('Y-m-d H:i:s', strtotime($rtCacheDate) + Client::CACHE_LIFETIME)
             )
         );
     }
@@ -38,17 +52,17 @@ class DefaultController extends Controller
      * @param string $premium
      * @return Response
      */
-    public function renderAction(Request $request, $key, $premium = 'public')
+    public function renderAction(Request $request, $key, $premium = 'public', $site = 'difm')
     {
         $premium = $premium === 'premium';
-        $key = $key === 'difm' ? '' : $key;
+        $key = $key === 'playlist' ? '' : $key;
         $key = preg_replace('/[^\da-z]/', '', $key);
         $format = $request->get('_format');
-        $channels = $this->get('sandshark_difm.api')
-            ->getChannels();
+        $channels = $this->getChannels($site);
         $playlist = PlaylistFactory::create($format, $channels)
             ->setListenKey($key)
-            ->setPremium($premium);
+            ->setPremium($premium)
+            ->setSite($site);
         return new Response(
             $playlist->render(),
             200,
@@ -57,5 +71,35 @@ class DefaultController extends Controller
                 'content-disposition' => 'attachment; filename=' . $playlist->getFileName()
             )
         );
+    }
+
+    /**
+     * Get the channels fror difm or radiotunes
+     * @param string $site 'difm'|'radiontunes'
+     * @return \Sandshark\DifmBundle\Collection\ChannelCollection
+     */
+    private function getChannels($site)
+    {
+        switch ($site) {
+            case 'difm':
+                $channels =  $difmChannels = $this->get('sandshark_difm.api')->getChannels();
+                $channels['club']->setChannelKey('clubsounds');
+                break;
+            case 'jazzradio':
+                $channels = $this->get('sandshark_jazzradio.api')->getChannels();
+                break;
+            case 'rockradio':
+                $channels = $this->get('sandshark_rockradio.api')->getChannels();
+                break;
+            case 'radiotunes':
+                $difmChannels = $this->get('sandshark_difm.api')->getChannels();
+                $channels = $this->get('sandshark_radiotunes.api')->getChannels();
+                $collisionResolver = new CollisionResolver($difmChannels);
+                $channels = $collisionResolver->resolve($channels, 'rt');
+                break;
+            default:
+                throw new InvalidArgumentException(sprintf('Invalid site \'%s\'', $site));
+        }
+        return $channels;
     }
 }

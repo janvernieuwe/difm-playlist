@@ -70,6 +70,16 @@ class Channel
     }
 
     /**
+     * Get channelId
+     *
+     * @return integer
+     */
+    public function getChannelId()
+    {
+        return $this->channelId;
+    }
+
+    /**
      * Set channelId
      *
      * @param integer $channelId
@@ -82,13 +92,13 @@ class Channel
     }
 
     /**
-     * Get channelId
+     * Get channelKey
      *
-     * @return integer
+     * @return string
      */
-    public function getChannelId()
+    public function getChannelKey()
     {
-        return $this->channelId;
+        return $this->channelKey;
     }
 
     /**
@@ -104,13 +114,13 @@ class Channel
     }
 
     /**
-     * Get channelKey
+     * Get channelName
      *
      * @return string
      */
-    public function getChannelKey()
+    public function getChannelName()
     {
-        return $this->channelKey;
+        return $this->channelName;
     }
 
     /**
@@ -126,13 +136,13 @@ class Channel
     }
 
     /**
-     * Get channelName
+     * Get channelPlaylist
      *
      * @return string
      */
-    public function getChannelName()
+    public function getChannelPlaylist()
     {
-        return $this->channelName;
+        return $this->channelPlaylist;
     }
 
     /**
@@ -148,12 +158,12 @@ class Channel
     }
 
     /**
-     * Get channelPlaylist
-     *
+     * Get domain name from playlist
      * @return string
      */
-    public function getChannelPlaylist()
+    public function getDomain()
     {
-        return $this->channelPlaylist;
+        $url = parse_url($this->channelPlaylist);
+        return (string) str_replace('listen.', '', $url['host']);
     }
 }

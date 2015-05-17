@@ -19,4 +19,7 @@ parameters:
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
 
-	difm.base_url:     'http://listen.di.fm'
+	difm.base_url:       'http://listen.di.fm'
+	radiotunes.base_url: 'http://listen.radiotunes.com'
+	jazzradio.base_url:  'http://listen.jazzradio.com'
+	rockradio.base_url:  'http://listen.rockradio.com'

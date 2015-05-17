@@ -6,13 +6,16 @@
             'checked_type':    ":input[name='type']:checked",
             'premium':         ":input[name='premium']",
             'checked_premium': ":input[name='premium']:checked",
+            'site':         ":input[name='site']",
+            'checked_site': ":input[name='site']:checked",
             'checked':         ":input[type='radio']:checked",
             'not_checked':     ":input[type='radio']:not(checked)",
             'permalink':       "#permaLink"
         };
-        this.listenKey = 'difm';
+        this.listenKey = 'playlist';
         this.type = 'pls';
         this.premium = false;
+        this.site = 'difm';
         this.updatePermaLink();
         this.registerHandlers();
         this.updateBtns();
@@ -27,6 +30,11 @@
         });
         $(this.element.type).bind('change', function () {
             self.type = $(self.element.checked_type).val();
+            self.updatePermaLink();
+            self.updateBtns();
+        });
+        $(this.element.site).bind('change', function () {
+            self.site = $(self.element.checked_site).val();
             self.updatePermaLink();
             self.updateBtns();
         });
@@ -75,7 +83,7 @@
 
     PlaylistController.prototype.getUri = function () {
         var premium = this.premium ? 'premium' : 'public';
-        return '/' + premium + '/' + this.listenKey + '.' + this.type;
+        return '/' + this.site + '/' + premium + '/' + this.listenKey + '.' + this.type;
     };
 
     PlaylistController.prototype.filterKey = function () {

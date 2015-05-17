@@ -19,13 +19,6 @@ use GuzzleHttp\Client as GuzzleClient;
 class Client
 {
     /**
-     * Base url for di.fm api
-     * @see http://difm.eu/dox/#8
-     * @type string
-     */
-    const BASE_URL = 'http://listen.di.fm';
-
-    /**
      * Channels endpoint
      * @type string
      */
@@ -36,16 +29,6 @@ class Client
      * @type int
      */
     const CACHE_LIFETIME = 3600;
-
-    /**
-     * @var string
-     */
-    protected $baseUri;
-
-    /**
-     * @var string
-     */
-    protected $siteName;
 
     /**
      * @var int
@@ -83,8 +66,9 @@ class Client
      */
     public function getChannelsCacheDate()
     {
-        if ($this->cache->contains(self::CHANNELS . '_timestamp')) {
-            return $this->cache->fetch(self::CHANNELS . '_timestamp');
+        $timestampKey = $this->getCacheKey(self::CHANNELS . '_timestamp');
+        if ($this->cache->contains($timestampKey)) {
+            return $this->cache->fetch($timestampKey);
         }
         return date('Y-m-d H:i:s');
     }
@@ -110,14 +94,31 @@ class Client
      */
     public function get($key)
     {
-        if ($this->cache->contains($key)) {
+        $responseKey = $this->getCacheKey($key);
+        $timestampKey = $this->getCacheKey($key . '_timestamp');
+        if ($this->cache->contains($responseKey) && false) {
             return json_decode($this->cache->fetch($key));
         }
         $response = (string)$this->api
             ->get($key)
             ->getBody();
-        $this->cache->save($key, $response, self::CACHE_LIFETIME);
-        $this->cache->save($key . '_timestamp', date('Y-m-d H:i:s'), self::CACHE_LIFETIME);
+        $this->cache->save($responseKey, $response, self::CACHE_LIFETIME);
+        $this->cache->save($timestampKey, date('Y-m-d H:i:s'), self::CACHE_LIFETIME);
         return json_decode($response);
+    }
+
+    /**
+     * Get cache key from a normal key, prepends the request base_url
+     * @param $key
+     * @return string
+     */
+    private function getCacheKey($key)
+    {
+        $url = parse_url($this->api->getBaseUrl());
+        return sprintf(
+            '%s_%s',
+            $url['host'],
+            $key
+        );
     }
 }
