@@ -16,23 +16,25 @@
         this.updatePermaLink();
         this.registerHandlers();
         this.updateBtns();
+        this.toggleListenKey();
     };
 
     PlaylistController.prototype.registerHandlers = function () {
         var self = this;
-        $(self.element.listenKey).bind('change keyup', function () {
+        $(this.element.listenKey).bind('change keyup', function () {
             self.listenKey = self.filterKey();
             self.updatePermaLink();
         });
-        $(self.element.type).bind('change', function () {
+        $(this.element.type).bind('change', function () {
             self.type = $(self.element.checked_type).val();
             self.updatePermaLink();
             self.updateBtns();
         });
-        $(self.element.premium).bind('change', function () {
+        $(this.element.premium).bind('change', function () {
             self.premium = parseInt($(self.element.checked_premium).val()) === 1;
             self.updatePermaLink();
             self.updateBtns();
+            self.toggleListenKey();
         });
         $("#generateBtn").click(function () {
             window.location = self.getUri();
@@ -49,6 +51,12 @@
             .each(function (i, el) {
                 self.setChecked(el);
             });
+    };
+
+    PlaylistController.prototype.toggleListenKey = function () {
+        $(this.element.listenKey)
+            .closest('.form-group')
+            .toggle(this.premium);
     };
 
     PlaylistController.prototype.setChecked = function (el) {
