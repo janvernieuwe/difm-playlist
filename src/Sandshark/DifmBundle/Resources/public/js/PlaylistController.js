@@ -10,7 +10,7 @@
             'not_checked':     ":input[type='radio']:not(checked)",
             'permalink':       "#permaLink"
         };
-        this.listenKey = '3x4mpl3';
+        this.listenKey = 'difm';
         this.type = 'pls';
         this.premium = false;
         this.updatePermaLink();
