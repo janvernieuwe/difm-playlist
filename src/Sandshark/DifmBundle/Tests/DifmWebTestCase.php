@@ -9,11 +9,12 @@
 namespace Sandshark\DifmBundle\Tests;
 
 
-use Sandshark\DifmBundle\Api\Difm;
+use Sandshark\DifmBundle\Api\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class DifmWebTestCase extends WebTestCase
 {
+
     /**
      * Mock Guzzle service and api before returning the client
      * @return \Symfony\Bundle\FrameworkBundle\Client
@@ -41,7 +42,14 @@ class DifmWebTestCase extends WebTestCase
         $client = parent::createClient();
         $container = $client->getContainer();
         $container->set('sandshark_difm.guzzle', $guzzle);
-        $container->set('sandshark_difm.api', new Difm($guzzle, $container->get('sandshark_difm.cache')));
+        $container->set(
+            'sandshark_difm.api',
+            new Client(
+                $guzzle,
+                $container->get('sandshark_difm.cache'),
+                $container->get('sandshark_difm.channel_hydrator')
+            )
+        );
         return $client;
     }
 

@@ -3,7 +3,7 @@
 namespace Sandshark\DifmBundle\Controller;
 
 
-use Sandshark\DifmBundle\Api\Difm;
+use Sandshark\DifmBundle\Api\Client;
 use Sandshark\DifmBundle\Playlist\PlaylistFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +26,7 @@ class DefaultController extends Controller
             array(
                 'channelCount' => $channels->count(),
                 'cacheDate'    => $cacheDate,
-                'nextUpdate'   => date('Y-m-d H:i:s', strtotime($cacheDate) + Difm::CACHE_LIFETIME)
+                'nextUpdate'   => date('Y-m-d H:i:s', strtotime($cacheDate) + Client::CACHE_LIFETIME)
             )
         );
     }
@@ -41,8 +41,8 @@ class DefaultController extends Controller
     public function renderAction(Request $request, $key, $premium = 'public')
     {
         $premium = $premium === 'premium';
-        $key = preg_replace('/[^\da-z]/', '', $key);
         $key = $key === 'difm' ? '' : $key;
+        $key = preg_replace('/[^\da-z]/', '', $key);
         $format = $request->get('_format');
         $channels = $this->get('sandshark_difm.api')
             ->getChannels();

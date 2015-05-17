@@ -1,10 +1,13 @@
 services:
-    sandshark_difm.guzzle:
-        class: GuzzleHttp\Client
-        arguments: [{base_url: 'http://listen.di.fm', stream: false}]
     sandshark_difm.cache:
         class: Doctrine\Common\Cache\FilesystemCache
         arguments: [%kernel.cache_dir%, 'difm_cache.data']
+    sandshark_difm.channel_hydrator:
+        class: Sandshark\DifmBundle\Api\ChannelHydrator
+        arguments: [@validator]
+    sandshark_difm.guzzle:
+        class: GuzzleHttp\Client
+        arguments: [{base_url: %difm.base_url%, stream: false}]
     sandshark_difm.api:
-        class: Sandshark\DifmBundle\Api\Difm
-        arguments: [@sandshark_difm.guzzle, @sandshark_difm.cache]
+        class: Sandshark\DifmBundle\Api\Client
+        arguments: [@sandshark_difm.guzzle, @sandshark_difm.cache, @sandshark_difm.channel_hydrator]

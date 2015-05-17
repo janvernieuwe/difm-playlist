@@ -10,14 +10,13 @@ namespace Sandshark\DifmBundle\Api;
 
 
 use Doctrine\Common\Cache\FilesystemCache;
-use GuzzleHttp\Client;
-use Sandshark\DifmBundle\Collection\ChannelCollection;
+use GuzzleHttp\Client as GuzzleClient;
 
 /**
- * Class Difm
+ * Class Client
  * @package Sandshark\DifmBundle\Api
  */
-class Difm
+class Client
 {
     /**
      * Base url for di.fm api
@@ -39,20 +38,43 @@ class Difm
     const CACHE_LIFETIME = 3600;
 
     /**
+     * @var string
+     */
+    protected $baseUri;
+
+    /**
+     * @var string
+     */
+    protected $siteName;
+
+    /**
+     * @var int
+     */
+    protected $cacheLifetime;
+
+    /**
      * @var Client
      */
     private $api;
 
     /**
+     * Channel hydrator service
+     * @var ChannelHydrator
+     */
+    private $hydrator;
+
+    /**
      * Class constructor
      * Takes care of configuration
-     * @param Client $api
+     * @param GuzzleClient $api
      * @param FilesystemCache $cache
+     * @param ChannelHydrator $hydrator
      */
-    public function __construct(Client $api, FilesystemCache $cache)
+    public function __construct(GuzzleClient $api, FilesystemCache $cache, ChannelHydrator $hydrator)
     {
         $this->api = $api;
         $this->cache = $cache;
+        $this->hydrator = $hydrator;
     }
 
     /**
@@ -74,12 +96,8 @@ class Difm
     public function getChannels()
     {
         $channels = $this->get(self::CHANNELS);
-        $channelCollection = new ChannelCollection();
-        $channelHydrator = new ChannelHydrator();
-        foreach ($channels as $data) {
-            $channel = $channelHydrator->hydrate($data);
-            $channelCollection->offsetSet($channel->getChannelKey(), $channel);
-        }
+        $channelCollection = $this->hydrator
+            ->hydrateCollection($channels);
         $channelCollection->ksort();
         return $channelCollection;
     }
