@@ -3,7 +3,6 @@
 namespace Sandshark\DifmBundle\Controller;
 
 use Psr\Log\InvalidArgumentException;
-use Sandshark\DifmBundle\Api\Client;
 use Sandshark\DifmBundle\Api\CollisionResolver;
 use Sandshark\DifmBundle\Playlist\PlaylistFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -23,23 +22,18 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        $difm = $this->get('sandshark_difm.api');
-        $diChannels = $difm->getChannels();
-        $diCacheDate = $difm->getChannelsCacheDate();
-
-        $radioTunes = $this->get('sandshark_radiotunes.api');
-        $rtChannels = $radioTunes->getChannels();
-        $rtCacheDate = $radioTunes->getChannelsCacheDate();
+        $digitallyImported = $this->get('channel_difm');
+        $radioTunes = $this->get('channel_radiotunes');
 
         return $this->render(
             '@SandsharkDifm/Default/index.html.twig',
             array(
-                'diChannelCount' => $diChannels->count(),
-                'diCacheDate'    => $diCacheDate,
-                'diNextUpdate'   => date('Y-m-d H:i:s', strtotime($diCacheDate) + Client::CACHE_LIFETIME),
-                'rtChannelCount' => $rtChannels->count(),
-                'rtCacheDate'    => $rtCacheDate,
-                'rtNextUpdate'   => date('Y-m-d H:i:s', strtotime($rtCacheDate) + Client::CACHE_LIFETIME)
+                'diChannelCount' => $digitallyImported->getChannelCount(),
+                'diCacheDate'    => $digitallyImported->cachedAt(),
+                'diNextUpdate'   => $digitallyImported->expiresAt(),
+                'rtChannelCount' => $radioTunes->getChannelCount(),
+                'rtCacheDate'    => $radioTunes->cachedAt(),
+                'rtNextUpdate'   => $radioTunes->expiresAt()
             )
         );
     }
@@ -83,20 +77,20 @@ class DefaultController extends Controller
     {
         switch ($site) {
             case 'difm':
-                $channels = $difmChannels = $this->get('sandshark_difm.api')->getChannels();
+                $channels = $difmChannels = $this->get('channel_difm')->getChannels();
                 $channels['club']->setChannelKey('clubsounds');
                 $channels['electro']->setChannelKey('electrohouse');
                 $channels['classictechno']->setChannelKey($premium ? 'classicelectronica' : 'oldschoolelectronica');
                 break;
             case 'jazzradio':
-                $channels = $this->get('sandshark_jazzradio.api')->getChannels();
+                $channels = $this->get('channel_jazzradio')->getChannels();
                 break;
             case 'rockradio':
-                $channels = $this->get('sandshark_rockradio.api')->getChannels();
+                $channels = $this->get('channel_rockradio')->getChannels();
                 break;
             case 'radiotunes':
-                $difmChannels = $this->get('sandshark_difm.api')->getChannels();
-                $channels = $this->get('sandshark_radiotunes.api')->getChannels();
+                $difmChannels = $this->get('channel_difm')->getChannels();
+                $channels = $this->get('channel_radiotunes')->getChannels();
                 $collisionResolver = new CollisionResolver($difmChannels);
                 $channels = $collisionResolver->resolve($channels, 'rt');
                 break;

@@ -66,7 +66,6 @@ class AbstractPlaylist
         $this->channels = $channels;
     }
 
-
     /**
      * Set the listen key
      * @param string $listenKey

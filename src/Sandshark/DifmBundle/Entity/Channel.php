@@ -23,7 +23,7 @@ class Channel
     private $id;
 
     /**
-     * Client channel id
+     * ChannelProvider channel id
      * @var integer
      * @ORM\Column(name="channel_id", type="integer")
      * @Assert\GreaterThan(0)
@@ -32,7 +32,7 @@ class Channel
     private $channelId;
 
     /**
-     * Client channel key
+     * ChannelProvider channel key
      * @var string
      * @ORM\Column(name="channel_key", type="string", length=255)
      * @Assert\NotBlank()
@@ -41,7 +41,7 @@ class Channel
     private $channelKey;
 
     /**
-     * Client channel name
+     * ChannelProvider channel name
      * @var string
      * @ORM\Column(name="channel_name", type="string", length=255)
      * @Assert\NotBlank()

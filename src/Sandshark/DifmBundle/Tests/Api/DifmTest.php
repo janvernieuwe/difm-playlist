@@ -25,7 +25,7 @@ class DifmWebTest extends DifmWebTestCase
     {
         $client = parent::createClient();
         $difm = $client->getContainer()
-            ->get('sandshark_difm.api');
+            ->get('channel_difm');
         self::$channels = $difm->getChannels();
     }
 

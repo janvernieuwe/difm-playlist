@@ -9,7 +9,7 @@
 namespace Sandshark\DifmBundle\Tests;
 
 
-use Sandshark\DifmBundle\Api\Client;
+use Sandshark\DifmBundle\Api\ChannelProvider;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class DifmWebTestCase extends WebTestCase
@@ -45,10 +45,10 @@ class DifmWebTestCase extends WebTestCase
 
         $client = parent::createClient();
         $container = $client->getContainer();
-        $container->set('sandshark_difm.guzzle', $guzzle);
+        $container->set('api_difm', $guzzle);
         $container->set(
-            'sandshark_difm.api',
-            new Client(
+            'channel_difm',
+            new ChannelProvider(
                 $guzzle,
                 $container->get('sandshark_difm.cache'),
                 $container->get('sandshark_difm.channel_hydrator')

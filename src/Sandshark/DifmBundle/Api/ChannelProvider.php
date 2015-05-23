@@ -8,15 +8,15 @@
 
 namespace Sandshark\DifmBundle\Api;
 
-
 use Doctrine\Common\Cache\FilesystemCache;
 use GuzzleHttp\Client as GuzzleClient;
+use Proxies\__CG__\Sandshark\DifmBundle\Entity\Channel;
 
 /**
- * Class Client
+ * Class ChannelProvider
  * @package Sandshark\DifmBundle\Api
  */
-class Client
+class ChannelProvider
 {
     /**
      * Channels endpoint
@@ -36,7 +36,7 @@ class Client
     protected $cacheLifetime;
 
     /**
-     * @var Client
+     * @var ChannelProvider
      */
     private $api;
 
@@ -52,25 +52,72 @@ class Client
      * @param GuzzleClient $api
      * @param FilesystemCache $cache
      * @param ChannelHydrator $hydrator
+     * @param $publicKey
+     * @param $premiumKey
      */
-    public function __construct(GuzzleClient $api, FilesystemCache $cache, ChannelHydrator $hydrator)
+    public function __construct(GuzzleClient $api, FilesystemCache $cache, ChannelHydrator $hydrator, $publicKey, $premiumKey)
     {
         $this->api = $api;
         $this->cache = $cache;
         $this->hydrator = $hydrator;
+        $this->publicKey = $publicKey;
+        $this->premiumKey = $premiumKey;
     }
 
     /**
      * Get cache statistics
      * @return array|null
      */
-    public function getChannelsCacheDate()
+    public function cachedAt()
     {
         $timestampKey = $this->getCacheKey(self::CHANNELS . '_timestamp');
         if ($this->cache->contains($timestampKey)) {
             return $this->cache->fetch($timestampKey);
         }
         return date('Y-m-d H:i:s');
+    }
+
+    /**
+     * Get cache key from a normal key, prepends the request base_url
+     * @param $key
+     * @return string
+     */
+    private function getCacheKey($key)
+    {
+        $url = parse_url($this->api->getBaseUrl());
+        return sprintf(
+            '%s_%s',
+            $url['host'],
+            $key
+        );
+    }
+
+    /**
+     * Get cache statistics
+     * @return array|null
+     */
+    public function expiresAt()
+    {
+        $timestampKey = $this->getCacheKey(self::CHANNELS . '_timestamp');
+        if ($this->cache->contains($timestampKey)) {
+            $timestamp = $this->cache->fetch($timestampKey);
+        } else {
+            $timestamp = date('Y-m-d H:i:s');
+        }
+        return strtotime($timestamp, sprintf('+%d seconds', self::CACHE_LIFETIME));
+    }
+
+    public function getPlaylist(Channel $channel, $premium = false)
+    {
+    }
+
+    /**
+     * Get the amount of channels
+     * @return int
+     */
+    public function getChannelCount()
+    {
+        return count($this->getChannels());
     }
 
     /**
@@ -105,20 +152,5 @@ class Client
         $this->cache->save($responseKey, $response, self::CACHE_LIFETIME);
         $this->cache->save($timestampKey, date('Y-m-d H:i:s'), self::CACHE_LIFETIME);
         return json_decode($response);
-    }
-
-    /**
-     * Get cache key from a normal key, prepends the request base_url
-     * @param $key
-     * @return string
-     */
-    private function getCacheKey($key)
-    {
-        $url = parse_url($this->api->getBaseUrl());
-        return sprintf(
-            '%s_%s',
-            $url['host'],
-            $key
-        );
     }
 }

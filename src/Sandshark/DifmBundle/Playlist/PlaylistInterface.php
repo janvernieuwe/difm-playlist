@@ -20,7 +20,6 @@ interface PlaylistInterface
     /**
      * Class constructor
      * @param ChannelCollection $channels
-     * @param string $listenKey
      */
     public function __construct(ChannelCollection $channels);
 
