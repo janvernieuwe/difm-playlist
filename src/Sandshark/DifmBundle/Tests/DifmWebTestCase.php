@@ -8,7 +8,6 @@
 
 namespace Sandshark\DifmBundle\Tests;
 
-
 use Sandshark\DifmBundle\Api\ChannelProvider;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
