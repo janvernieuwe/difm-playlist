@@ -8,9 +8,9 @@
 
 namespace Sandshark\DifmBundle\Api;
 
-use Doctrine\Common\Cache\FilesystemCache;
 use GuzzleHttp\Client as GuzzleClient;
-use Proxies\__CG__\Sandshark\DifmBundle\Entity\Channel;
+use Sandshark\DifmBundle\Entity\Channel;
+use Symfony\Component\DependencyInjection\Container;
 
 /**
  * Class ChannelProvider
@@ -47,19 +47,31 @@ class ChannelProvider
     private $hydrator;
 
     /**
-     * Class constructor
-     * Takes care of configuration
-     * @param GuzzleClient $api
-     * @param FilesystemCache $cache
-     * @param ChannelHydrator $hydrator
-     * @param $publicKey
-     * @param $premiumKey
+     * Free listen key
+     * Should be loaded from configuration or input
+     * @var null|string
      */
-    public function __construct(GuzzleClient $api, FilesystemCache $cache, ChannelHydrator $hydrator, $publicKey = null, $premiumKey = null)
+    private $publicKey;
+
+    /**
+     * Premium listen key
+     * Should be loaded from configuration or input
+     * @var null|string
+     */
+    private $premiumKey;
+
+    /**
+     * Class constructor
+     * @param Container $container
+     * @param GuzzleClient $api
+     * @param string $publicKey
+     * @param string $premiumKey
+     */
+    public function __construct(Container $container, GuzzleClient $api, $publicKey = null, $premiumKey = null)
     {
         $this->api = $api;
-        $this->cache = $cache;
-        $this->hydrator = $hydrator;
+        $this->cache = $container->get('cache_file');
+        $this->hydrator = $container->get('hydrator_channel');
         $this->publicKey = $publicKey;
         $this->premiumKey = $premiumKey;
     }
@@ -107,6 +119,10 @@ class ChannelProvider
         return strtotime($timestamp, sprintf('+%d seconds', self::CACHE_LIFETIME));
     }
 
+    /**
+     * @param Channel $channel
+     * @param bool $premium
+     */
     public function getPlaylist(Channel $channel, $premium = false)
     {
     }

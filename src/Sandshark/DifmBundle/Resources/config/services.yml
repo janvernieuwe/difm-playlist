@@ -12,25 +12,25 @@ services:
         arguments: [{base_url: %difm.base_url%, stream: false}]
     channel_difm:
         class: Sandshark\DifmBundle\Api\ChannelProvider
-        arguments: [@api_difm, @cache_file, @hydrator_channel]
+        arguments: [@service_container, @api_difm]
 
     api_radiotunes:
         class: GuzzleHttp\Client
         arguments: [{base_url: %radiotunes.base_url%, stream: false}]
     channel_radiotunes:
         class: Sandshark\DifmBundle\Api\ChannelProvider
-        arguments: [@api_radiotunes, @cache_file, @hydrator_channel]
+        arguments: [@service_container, @api_radiotunes]
 
     api_jazzradio:
         class: GuzzleHttp\Client
         arguments: [{base_url: %jazzradio.base_url%, stream: false}]
     channel_jazzradio:
         class: Sandshark\DifmBundle\Api\ChannelProvider
-        arguments: [@api_jazzradio, @cache_file, @hydrator_channel]
+        arguments: [@service_container, @api_jazzradio]
 
     api_rockradio:
         class: GuzzleHttp\Client
         arguments: [{base_url: %rockradio.base_url%, stream: false}]
     channel_rockradio:
         class: Sandshark\DifmBundle\Api\ChannelProvider
-        arguments: [@api_rockradio, @cache_file, @hydrator_channel]
+        arguments: [@service_container, @api_rockradio]

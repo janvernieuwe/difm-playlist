@@ -49,9 +49,8 @@ class DifmWebTestCase extends WebTestCase
         $container->set(
             'channel_difm',
             new ChannelProvider(
-                $guzzle,
-                $container->get('cache_file'),
-                $container->get('hydrator_channel')
+                $container,
+                $guzzle
             )
         );
         return $client;
