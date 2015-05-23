@@ -200,7 +200,7 @@ class Channel
         $keyMap = array();
         if ($host === 'di.fm') {
             $keyMap = array(
-                'club'          => 'clubsounds',
+                'club'          => $premium ? 'club' : 'clubsounds',
                 'electro'       => 'electrohouse',
                 'classictechno' => $premium ? 'classicelectronica' : 'oldschoolelectronica'
             );

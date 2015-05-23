@@ -23,3 +23,4 @@ parameters:
 	radiotunes.base_url: 'http://listen.radiotunes.com'
 	jazzradio.base_url:  'http://listen.jazzradio.com'
 	rockradio.base_url:  'http://listen.rockradio.com'
+	premium_key:         EnterPremiumKeyForTestingHere
