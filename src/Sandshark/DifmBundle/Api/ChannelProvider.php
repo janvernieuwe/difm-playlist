@@ -55,7 +55,7 @@ class ChannelProvider
      * @param $publicKey
      * @param $premiumKey
      */
-    public function __construct(GuzzleClient $api, FilesystemCache $cache, ChannelHydrator $hydrator, $publicKey, $premiumKey)
+    public function __construct(GuzzleClient $api, FilesystemCache $cache, ChannelHydrator $hydrator, $publicKey = null, $premiumKey = null)
     {
         $this->api = $api;
         $this->cache = $cache;
