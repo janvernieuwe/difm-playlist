@@ -8,13 +8,11 @@
 
 namespace Sandshark\DifmBundle\Playlist;
 
-
 /**
  * Class AbstractPlaylist
  * @package Sandshark\DifmBundle\Playlist
  */
 use Sandshark\DifmBundle\Collection\ChannelCollection;
-use Sandshark\DifmBundle\Entity\Channel;
 use Symfony\Component\Validator\Exception\InvalidArgumentException;
 
 /**
@@ -102,73 +100,6 @@ class AbstractPlaylist
     {
         $this->premium = (bool)$premium;
         return $this;
-    }
-
-    /**
-     * Get the public or premium stream url depending on the settings
-     * @param Channel $channel
-     * @return string
-     */
-    public function getStreamUrl(Channel $channel)
-    {
-        if ($this->premium) {
-            return $this->getPremiumStreamUrl($channel);
-        } else {
-            return $this->getPublicStreamUrl($channel);
-        }
-    }
-
-    /**
-     * @param Channel $channel
-     * @return string
-     */
-    public function getPremiumStreamUrl(Channel $channel)
-    {
-        $key = is_null($this->listenKey) ? '' : '?' . $this->listenKey;
-        return sprintf(
-            'http://%s:80/%s_%s%s',
-            $this->getHostName($channel, $this->premium),
-            $channel->getChannelKey(),
-            'hi',
-            $key
-        );
-    }
-
-    /**
-     * Get hostname depending on the premium toggle
-     * @param Channel $channel
-     * @param bool $premium
-     * @return string
-     */
-    protected function getHostName(Channel $channel, $premium)
-    {
-        $domain = $channel->getDomain();
-        $sub = $premium ? 'prem' : 'pub';
-        if ($domain === 'di.fm') {
-            $id = $premium ? rand(1, 4) : rand(1, 8);
-        } else {
-            $id = $premium ? rand(1, 4) : rand(1, 6);
-        }
-        return sprintf('%s%d.%s', $sub, $id, $domain);
-    }
-
-    /**
-     * @param Channel $channel
-     * @return string
-     */
-    public function getPublicStreamUrl(Channel $channel)
-    {
-        $listenKey = is_null($this->listenKey) ? '' : '?' . $this->listenKey;
-        $listenPrefix = $channel->getDomain();
-        $listenPrefix = preg_replace('/\..*$/', '', $listenPrefix);
-        return sprintf(
-            'http://%s/%s_%s_%s%s',
-            $this->getHostName($channel, $this->premium),
-            $listenPrefix,
-            $channel->getChannelKey(),
-            'aac',
-            $listenKey
-        );
     }
 
     /**

@@ -9,6 +9,7 @@
 namespace Sandshark\DifmBundle\Api;
 
 use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\Message\FutureResponse;
 use Sandshark\DifmBundle\Entity\Channel;
 use Symfony\Component\DependencyInjection\Container;
 
@@ -116,7 +117,8 @@ class ChannelProvider
         } else {
             $timestamp = date('Y-m-d H:i:s');
         }
-        return strtotime($timestamp, sprintf('+%d seconds', self::CACHE_LIFETIME));
+        $timestamp = strtotime($timestamp);
+        return date('Y-m-d H:i:s', $timestamp + self::CACHE_LIFETIME);
     }
 
     /**
@@ -162,9 +164,10 @@ class ChannelProvider
         if ($this->cache->contains($responseKey)) {
             return json_decode($this->cache->fetch($responseKey));
         }
-        $response = (string)$this->api
-            ->get($key)
-            ->getBody();
+        /** @var FutureResponse $response */
+        $response = $this->api
+            ->get($key);
+        $response = (string) $response->getBody();
         $this->cache->save($responseKey, $response, self::CACHE_LIFETIME);
         $this->cache->save($timestampKey, date('Y-m-d H:i:s'), self::CACHE_LIFETIME);
         return json_decode($response);

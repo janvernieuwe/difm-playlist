@@ -28,7 +28,7 @@ class M3u extends AbstractPlaylist implements PlaylistInterface
         /** @var Channel $channel $channel */
         foreach ($this->channels as $channel) {
             $lines[] = sprintf('#EXTINF:-1,%s', $channel->getChannelName());
-            $lines[] = $this->getStreamUrl($channel);
+            $lines[] = $channel->getStreamUrl($this->premium, $this->listenKey);
         }
         return implode("\n", $lines);
     }

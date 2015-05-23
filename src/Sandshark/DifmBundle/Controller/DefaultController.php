@@ -2,12 +2,11 @@
 
 namespace Sandshark\DifmBundle\Controller;
 
-use Psr\Log\InvalidArgumentException;
-use Sandshark\DifmBundle\Api\CollisionResolver;
 use Sandshark\DifmBundle\Playlist\PlaylistFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 /**
  * Class DefaultController
@@ -52,7 +51,18 @@ class DefaultController extends Controller
         $key = $key === 'playlist' ? '' : $key;
         $key = preg_replace('/[^\da-z]/', '', $key);
         $format = $request->get('_format');
-        $channels = $this->getChannels($site, $premium);
+        $channels = null;
+        if ($site === 'difm') {
+            $channels = $this->get('channel_difm')
+                ->getChannels();
+        }
+        if ($site === 'radiotunes') {
+            $channels = $this->get('channel_radiotunes')
+                ->getChannels();
+        }
+        if (is_null($channels)) {
+            throw new ResourceNotFoundException(sprintf('Site %s is not supported', $site));
+        }
         $playlist = PlaylistFactory::create($format, $channels)
             ->setListenKey($key)
             ->setPremium($premium)
@@ -65,38 +75,5 @@ class DefaultController extends Controller
                 'content-disposition' => 'attachment; filename=' . $playlist->getFileName()
             )
         );
-    }
-
-    /**
-     * Get the channels fror difm or radiotunes
-     * @param string $site 'difm'|'radiontunes'
-     * @param boolean $premium
-     * @return \Sandshark\DifmBundle\Collection\ChannelCollection
-     */
-    private function getChannels($site, $premium)
-    {
-        switch ($site) {
-            case 'difm':
-                $channels = $difmChannels = $this->get('channel_difm')->getChannels();
-                $channels['club']->setChannelKey('clubsounds');
-                $channels['electro']->setChannelKey('electrohouse');
-                $channels['classictechno']->setChannelKey($premium ? 'classicelectronica' : 'oldschoolelectronica');
-                break;
-            case 'jazzradio':
-                $channels = $this->get('channel_jazzradio')->getChannels();
-                break;
-            case 'rockradio':
-                $channels = $this->get('channel_rockradio')->getChannels();
-                break;
-            case 'radiotunes':
-                $difmChannels = $this->get('channel_difm')->getChannels();
-                $channels = $this->get('channel_radiotunes')->getChannels();
-                $collisionResolver = new CollisionResolver($difmChannels);
-                $channels = $collisionResolver->resolve($channels, 'rt');
-                break;
-            default:
-                throw new InvalidArgumentException(sprintf('Invalid site \'%s\'', $site));
-        }
-        return $channels;
     }
 }

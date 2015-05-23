@@ -33,7 +33,7 @@ class Pls extends AbstractPlaylist implements PlaylistInterface
             $lines[] = sprintf(
                 'File%d=%s',
                 $i,
-                $this->getStreamUrl($channel)
+                $channel->getStreamUrl($this->premium, $this->listenKey)
             );
             $lines[] = sprintf('Title%d=%s', $i, $channel->getChannelName());
             $lines[] = sprintf('Length%d=-1', $i);

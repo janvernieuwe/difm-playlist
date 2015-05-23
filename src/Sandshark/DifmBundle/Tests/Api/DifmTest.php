@@ -8,7 +8,6 @@
 
 namespace Sandshark\DifmBundle\Tests\Api;
 
-
 use Sandshark\DifmBundle\Collection\ChannelCollection;
 use Sandshark\DifmBundle\Entity\Channel;
 use Sandshark\DifmBundle\Tests\DifmWebTestCase;
