@@ -47,7 +47,7 @@ class DifmWebTest extends DifmWebTestCase
         $this->assertEquals('00sclubhits', $channel->getChannelKey());
         $this->assertEquals('00\'s Club Hits', $channel->getChannelName());
         $this->assertEquals(
-            'http://listen.di.fm/steamlist/00sclubhits.pls',
+            'http://listen.di.fm/streamlist/00sclubhits.pls',
             $channel->getChannelPlaylist()
         );
         $this->assertEquals(324, $channel->getChannelId());
@@ -60,7 +60,7 @@ class DifmWebTest extends DifmWebTestCase
         $this->assertEquals('ambient', $channel->getChannelKey());
         $this->assertEquals('Ambient', $channel->getChannelName());
         $this->assertEquals(
-            'http://listen.di.fm/steamlist/ambient.pls',
+            'http://listen.di.fm/streamlist/ambient.pls',
             $channel->getChannelPlaylist()
         );
         $this->assertEquals(12, $channel->getChannelId());
@@ -74,7 +74,7 @@ class DifmWebTest extends DifmWebTestCase
         $this->assertEquals('vocaltrance', $channel->getChannelKey());
         $this->assertEquals('Vocal Trance', $channel->getChannelName());
         $this->assertEquals(
-            'http://listen.di.fm/steamlist/vocaltrance.pls',
+            'http://listen.di.fm/streamlist/vocaltrance.pls',
             $channel->getChannelPlaylist()
         );
         $this->assertEquals(2, $channel->getChannelId());
