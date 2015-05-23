@@ -2,7 +2,6 @@
 
 namespace Sandshark\DifmBundle\Controller;
 
-
 use Psr\Log\InvalidArgumentException;
 use Sandshark\DifmBundle\Api\Client;
 use Sandshark\DifmBundle\Api\CollisionResolver;
@@ -50,6 +49,7 @@ class DefaultController extends Controller
      * @param Request $request
      * @param string $key
      * @param string $premium
+     * @param string $site
      * @return Response
      */
     public function renderAction(Request $request, $key, $premium = 'public', $site = 'difm')
@@ -58,7 +58,7 @@ class DefaultController extends Controller
         $key = $key === 'playlist' ? '' : $key;
         $key = preg_replace('/[^\da-z]/', '', $key);
         $format = $request->get('_format');
-        $channels = $this->getChannels($site);
+        $channels = $this->getChannels($site, $premium);
         $playlist = PlaylistFactory::create($format, $channels)
             ->setListenKey($key)
             ->setPremium($premium)
@@ -76,14 +76,17 @@ class DefaultController extends Controller
     /**
      * Get the channels fror difm or radiotunes
      * @param string $site 'difm'|'radiontunes'
+     * @param boolean $premium
      * @return \Sandshark\DifmBundle\Collection\ChannelCollection
      */
-    private function getChannels($site)
+    private function getChannels($site, $premium)
     {
         switch ($site) {
             case 'difm':
-                $channels =  $difmChannels = $this->get('sandshark_difm.api')->getChannels();
+                $channels = $difmChannels = $this->get('sandshark_difm.api')->getChannels();
                 $channels['club']->setChannelKey('clubsounds');
+                $channels['electro']->setChannelKey('electrohouse');
+                $channels['classictechno']->setChannelKey($premium ? 'classicelectronica' : 'oldschoolelectronica');
                 break;
             case 'jazzradio':
                 $channels = $this->get('sandshark_jazzradio.api')->getChannels();

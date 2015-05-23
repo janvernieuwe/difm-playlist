@@ -8,7 +8,6 @@
 
 namespace Sandshark\DifmBundle\Tests\Entity;
 
-
 use Sandshark\DifmBundle\Collection\ChannelCollection;
 use Sandshark\DifmBundle\Entity\Channel;
 use Sandshark\DifmBundle\Playlist\Pls;
