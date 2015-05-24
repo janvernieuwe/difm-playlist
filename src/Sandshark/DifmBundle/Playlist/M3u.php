@@ -21,7 +21,7 @@ class M3u extends AbstractPlaylist implements PlaylistInterface
      */
     public function render($data = null)
     {
-        $lines = array();
+        $lines = [];
         $lines[] = '#EXTM3U';
         foreach ($this->channels as $channel) {
             $lines[] = sprintf('#EXTINF:-1,%s', $channel->getChannelName());

@@ -14,6 +14,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class PlaylistCommand
+ * @package Sandshark\DifmBundle\Command
+ */
 class PlaylistCommand extends ContainerAwareCommand
 {
     protected function configure()
@@ -34,6 +38,11 @@ class PlaylistCommand extends ContainerAwareCommand
             );
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int|null|void
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $name = $input->getArgument('site');

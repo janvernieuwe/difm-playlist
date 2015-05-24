@@ -22,15 +22,15 @@ class DefaultController extends Controller
     {
         return $this->render(
             '@SandsharkDifm/Default/index.html.twig',
-            array(
+            [
                 'difm'       => $this->get('channel_difm'),
                 'radiotunes' => $this->get('channel_radiotunes'),
                 'jazzradio'  => $this->get('channel_jazzradio'),
                 'rockradio'  => $this->get('channel_rockradio'),
                 'errors'     => $this->get('session')
                     ->getFlashBag()
-                    ->get('error', array())
-            )
+                    ->get('error', [])
+            ]
         );
     }
 

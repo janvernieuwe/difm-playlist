@@ -125,15 +125,19 @@ abstract class AbstractPlaylist implements PlaylistInterface
         return $this;
     }
 
+    /**
+     * @param null $data
+     * @return Response
+     */
     public function render($data = null)
     {
         return new Response(
             $data,
             200,
-            array(
+            [
                 'content-type'        => $this->getContentType(),
                 'content-disposition' => 'attachment; filename=' . $this->getFileName()
-            )
+            ]
         );
     }
 }

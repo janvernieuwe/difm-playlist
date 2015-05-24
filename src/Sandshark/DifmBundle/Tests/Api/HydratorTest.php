@@ -8,11 +8,14 @@
 
 namespace Sandshark\DifmBundle\Tests\Api;
 
-
 use Sandshark\DifmBundle\Api\ChannelHydrator;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Validator\Validator;
 
+/**
+ * Class HydratorTest
+ * @package Sandshark\DifmBundle\Tests\Api
+ */
 class HydratorTest extends WebTestCase
 {
 
@@ -28,17 +31,21 @@ class HydratorTest extends WebTestCase
 
     public function setUp()
     {
-        $this->validChannelObject = (object)array(
+        $this->validChannelObject = (object)[
             'id'       => 1,
             'name'     => 'Test Channel',
             'key'      => 'testchannel',
             'playlist' => 'http://example.com/test.pls'
-        );
+        ];
         /** @var Validator $validator */
         $validator = $this->get('validator');
         $this->hydrator = new ChannelHydrator($validator);
     }
 
+    /**
+     * @param $key
+     * @return object
+     */
     private function get($key)
     {
         return self::createClient()

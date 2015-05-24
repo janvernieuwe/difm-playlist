@@ -14,6 +14,10 @@ use Sandshark\DifmBundle\Entity\Channel;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DependencyInjection\Container;
 
+/**
+ * Class ConnectionChecker
+ * @package Sandshark\DifmBundle\Tests\Api
+ */
 class ConnectionChecker extends WebTestCase
 {
 
@@ -88,6 +92,10 @@ class ConnectionChecker extends WebTestCase
         }
     }
 
+    /**
+     * @param Channel $channel
+     * @param $premium
+     */
     private function checkConnection(Channel $channel, $premium)
     {
         $url = $channel->getStreamUrl($premium, $premium ? self::$key : '');

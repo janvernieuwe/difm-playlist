@@ -142,12 +142,12 @@ class Channel
         $key = is_null($key) ? '' : '?' . $key;
         // Premium
         if ($premium) {
-            $qualityMap = array(
+            $qualityMap = [
                 'di.fm' => 'hi',
                 'radiotunes.com' => 'hi',
                 'jazzradio.com' => 'low',
                 'rockradio.com' => 'low'
-            );
+            ];
             $quality = $qualityMap[$this->getDomain()];
             return sprintf(
                 'http://%s:80/%s_%s%s',
@@ -157,12 +157,12 @@ class Channel
                 $key
             );
         }
-        $prefixMap = array(
+        $prefixMap = [
             'di.fm' => 'di',
             'radiotunes.com' => 'radiotunes',
             'jazzradio.com' => 'jr',
             'rockradio.com' => 'rr'
-        );
+        ];
         $prefix = $prefixMap[$this->getDomain()];
         return sprintf(
             'http://%s:80/%s_%s_aacplus%s',
@@ -210,16 +210,16 @@ class Channel
     public function getStreamKey($premium)
     {
         $host = $this->getDomain();
-        $keyMap = array();
+        $keyMap = [];
         if ($host === 'di.fm') {
-            $keyMap = array(
+            $keyMap = [
                 'club'          => $premium ? 'club' : 'clubsounds',
                 'electro'       => 'electrohouse',
                 'classictechno' => $premium ? 'classicelectronica' : 'oldschoolelectronica'
-            );
+            ];
         }
         if ($host === 'radiotunes.com') {
-            $keyMap = array(
+            $keyMap = [
                 'ambient'         => 'rtambient',
                 'chillout'        => 'rtchillout',
                 'downtempolounge' => 'rtdowntempolounge',
@@ -227,7 +227,7 @@ class Channel
                 'lounge'          => 'rtlounge',
                 'vocalchillout'   => 'rtvocalchillout',
                 'vocallounge'     => 'rtvocallounge'
-            );
+            ];
         }
         $key = $this->getChannelKey();
         if (array_key_exists($key, $keyMap)) {

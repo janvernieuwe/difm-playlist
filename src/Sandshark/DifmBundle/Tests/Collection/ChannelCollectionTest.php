@@ -6,12 +6,16 @@
  * Time: 23:06
  */
 
-namespace Sandshark\DifmBundle\Tests\Entity;
+namespace Sandshark\DifmBundle\Tests\Collection;
 
 use Sandshark\DifmBundle\Collection\ChannelCollection;
 use Sandshark\DifmBundle\Entity\Channel;
 use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
 
+/**
+ * Class ChannelCollectionTest
+ * @package Sandshark\DifmBundle\Tests\Collection
+ */
 class ChannelCollectionTest extends TestCase
 {
 

@@ -8,10 +8,13 @@
 
 namespace Sandshark\DifmBundle\Tests\Entity;
 
-
 use Sandshark\DifmBundle\Entity\Channel;
 use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
 
+/**
+ * Class ChannelTest
+ * @package Sandshark\DifmBundle\Tests\Entity
+ */
 class ChannelTest extends TestCase
 {
 

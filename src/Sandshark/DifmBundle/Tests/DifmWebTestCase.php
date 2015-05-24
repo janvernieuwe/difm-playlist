@@ -11,6 +11,10 @@ namespace Sandshark\DifmBundle\Tests;
 use Sandshark\DifmBundle\Api\ChannelProvider;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * Class DifmWebTestCase
+ * @package Sandshark\DifmBundle\Tests
+ */
 class DifmWebTestCase extends WebTestCase
 {
 
@@ -26,6 +30,7 @@ class DifmWebTestCase extends WebTestCase
             ->disableOriginalConstructor()
             ->getMock();
 
+        /** @noinspection PhpUndefinedMethodInspection */
         $response
             ->method('getBody')
             ->willReturn($data);
@@ -34,10 +39,12 @@ class DifmWebTestCase extends WebTestCase
             ->disableOriginalConstructor()
             ->getMock();
 
+        /** @noinspection PhpUndefinedMethodInspection */
         $guzzle
             ->method('get')
             ->willReturn($response);
 
+        /** @noinspection PhpUndefinedMethodInspection */
         $guzzle
             ->method('getBaseUrl')
             ->willReturn('http://listen.di.fm');
@@ -45,6 +52,7 @@ class DifmWebTestCase extends WebTestCase
         $client = parent::createClient();
         $container = $client->getContainer();
         $container->set('api_difm', $guzzle);
+        /** @noinspection PhpParamsInspection */
         $container->set(
             'channel_difm',
             new ChannelProvider(

@@ -12,7 +12,11 @@ use Sandshark\DifmBundle\Collection\ChannelCollection;
 use Sandshark\DifmBundle\Entity\Channel;
 use Sandshark\DifmBundle\Tests\DifmWebTestCase;
 
-class DifmWebTest extends DifmWebTestCase
+/**
+ * Class DifmTest
+ * @package Sandshark\DifmBundle\Tests\Api
+ */
+class DifmTest extends DifmWebTestCase
 {
 
     /**

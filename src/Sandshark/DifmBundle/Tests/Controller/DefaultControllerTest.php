@@ -4,7 +4,11 @@ namespace Sandshark\DifmBundle\Tests\Controller;
 
 use Sandshark\DifmBundle\Tests\DifmWebTestCase;
 
-class DefaultControllerWebTest extends DifmWebTestCase
+/**
+ * Class DefaultControllerTest
+ * @package Sandshark\DifmBundle\Tests\Controller
+ */
+class DefaultControllerTest extends DifmWebTestCase
 {
 
     public function testPremiumPls()

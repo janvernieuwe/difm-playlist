@@ -8,7 +8,6 @@
 
 namespace Sandshark\DifmBundle\Api;
 
-
 use Sandshark\DifmBundle\Collection\ChannelCollection;
 use Sandshark\DifmBundle\Entity\Channel;
 use Symfony\Component\Validator\Exception\InvalidArgumentException;

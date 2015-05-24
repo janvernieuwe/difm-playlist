@@ -8,7 +8,10 @@
 
 namespace Sandshark\DifmBundle\Playlist;
 
-
+/**
+ * Class PlaylistException
+ * @package Sandshark\DifmBundle\Playlist
+ */
 class PlaylistException extends \Exception
 {
 }

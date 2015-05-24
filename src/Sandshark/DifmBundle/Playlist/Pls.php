@@ -22,7 +22,7 @@ class Pls extends AbstractPlaylist implements PlaylistInterface
     public function render($data = null)
     {
         $i = 0;
-        $lines = array();
+        $lines = [];
         $lines[] = '[playlist]';
         $lines[] = sprintf('NumberOfEntries=%d', count($this->channels));
         foreach ($this->channels as $channel) {

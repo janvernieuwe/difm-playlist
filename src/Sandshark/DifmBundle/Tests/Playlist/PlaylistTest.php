@@ -6,13 +6,17 @@
  * Time: 23:06
  */
 
-namespace Sandshark\DifmBundle\Tests\Entity;
+namespace Sandshark\DifmBundle\Tests\Playlist;
 
 use Sandshark\DifmBundle\Collection\ChannelCollection;
 use Sandshark\DifmBundle\Entity\Channel;
 use Sandshark\DifmBundle\Playlist\Pls;
 use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
 
+/**
+ * Class PlaylistTest
+ * @package Sandshark\DifmBundle\Tests\Playlist
+ */
 class PlaylistTest extends TestCase
 {
 
