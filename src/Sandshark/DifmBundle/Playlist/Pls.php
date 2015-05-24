@@ -8,8 +8,6 @@
 
 namespace Sandshark\DifmBundle\Playlist;
 
-use Sandshark\DifmBundle\Entity\Channel;
-
 /**
  * Class Pls
  * @package Sandshark\DifmBundle\Playlist
@@ -27,7 +25,6 @@ class Pls extends AbstractPlaylist implements PlaylistInterface
         $lines = array();
         $lines[] = '[playlist]';
         $lines[] = sprintf('NumberOfEntries=%d', count($this->channels));
-        /** @var Channel $channel */
         foreach ($this->channels as $channel) {
             $i++;
             $lines[] = sprintf(
