@@ -16,10 +16,10 @@ class Pls extends AbstractPlaylist implements PlaylistInterface
 {
     /**
      * Generates a .pls playlist
+     * @param null $data
      * @return string
-     * @throws PlaylistException
      */
-    public function render()
+    public function render($data = null)
     {
         $i = 0;
         $lines = array();
@@ -36,7 +36,8 @@ class Pls extends AbstractPlaylist implements PlaylistInterface
             $lines[] = sprintf('Length%d=-1', $i);
         }
         $lines[] = 'Version=2';
-        return implode("\n", $lines);
+        $data = implode("\n", $lines);
+        return parent::render($data);
     }
 
     /**

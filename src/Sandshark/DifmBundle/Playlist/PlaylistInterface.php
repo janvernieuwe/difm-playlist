@@ -9,6 +9,7 @@
 namespace Sandshark\DifmBundle\Playlist;
 
 use Sandshark\DifmBundle\Collection\ChannelCollection;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Interface PlaylistInterface
@@ -24,9 +25,10 @@ interface PlaylistInterface
 
     /**
      * Generate the playlist and return the string
-     * @return string
+     * @param null $data
+     * @return Response
      */
-    public function render();
+    public function render($data = null);
 
     /**
      * Return the content type for the current playlist type

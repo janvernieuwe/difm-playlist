@@ -13,13 +13,14 @@ namespace Sandshark\DifmBundle\Playlist;
  * @package Sandshark\DifmBundle\Playlist
  */
 use Sandshark\DifmBundle\Collection\ChannelCollection;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Exception\InvalidArgumentException;
 
 /**
  * Class AbstractPlaylist
  * @package Sandshark\DifmBundle\Playlist
  */
-class AbstractPlaylist
+abstract class AbstractPlaylist implements PlaylistInterface
 {
     /**
      * Collection of objects representing channels
@@ -122,5 +123,17 @@ class AbstractPlaylist
     {
         $this->site = (string)$site;
         return $this;
+    }
+
+    public function render($data = null)
+    {
+        return new Response(
+            $data,
+            200,
+            array(
+                'content-type'        => $this->getContentType(),
+                'content-disposition' => 'attachment; filename=' . $this->getFileName()
+            )
+        );
     }
 }
