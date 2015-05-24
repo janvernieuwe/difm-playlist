@@ -19,7 +19,7 @@ class ChannelCollection extends \ArrayObject
 {
 
     /**
-     * Set a Category by key
+     * Set a Channel by key
      * @param mixed $index
      * @param Channel $newVal
      * @throws BadInstanceException
@@ -81,9 +81,9 @@ class ChannelCollection extends \ArrayObject
     private function validate($input)
     {
         if (is_array($input)) {
-            foreach ($input as $category) {
-                if (!$category instanceof Channel) {
-                    throw new BadInstanceException('Channel', $category);
+            foreach ($input as $channel) {
+                if (!$channel instanceof Channel) {
+                    throw new BadInstanceException('Channel', $channel);
                 }
             }
         }
