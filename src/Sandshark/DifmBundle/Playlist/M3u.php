@@ -16,10 +16,10 @@ class M3u extends AbstractPlaylist implements PlaylistInterface
 {
     /**
      * Generates a .m3u playlist
+     * @param null $data
      * @return string
-     * @throws PlaylistException
      */
-    public function render()
+    public function render($data = null)
     {
         $lines = array();
         $lines[] = '#EXTM3U';
@@ -27,7 +27,8 @@ class M3u extends AbstractPlaylist implements PlaylistInterface
             $lines[] = sprintf('#EXTINF:-1,%s', $channel->getChannelName());
             $lines[] = $channel->getStreamUrl($this->premium, $this->listenKey);
         }
-        return implode("\n", $lines);
+        $data = implode("\n", $lines);
+        return parent::render($data);
     }
 
     /**

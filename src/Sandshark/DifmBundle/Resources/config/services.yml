@@ -7,6 +7,10 @@ services:
         class: Sandshark\DifmBundle\Api\ChannelHydrator
         arguments: [@validator]
 
+    difm_provider.playlist:
+        class: Sandshark\DifmBundle\Playlist\PlaylistProvider
+        arguments: [@service_container]
+
     api_difm:
         class: GuzzleHttp\Client
         arguments: [{base_url: %difm.base_url%, stream: false}]

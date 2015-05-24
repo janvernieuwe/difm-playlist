@@ -57,6 +57,6 @@ class DefaultControllerWebTest extends DifmWebTestCase
     {
         $client = static::createClient();
         $client->request('GET', '/difm/premium/test.invalid');
-        $this->assertEquals(404, $client->getResponse()->getStatusCode());
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
     }
 }
