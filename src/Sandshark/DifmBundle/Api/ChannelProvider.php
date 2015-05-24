@@ -28,7 +28,7 @@ class ChannelProvider
      * Time in seconds to cache a request
      * @type int
      */
-    const CACHE_LIFETIME = 3600;
+    const CACHE_LIFETIME = 86400;
 
     /**
      * @var int

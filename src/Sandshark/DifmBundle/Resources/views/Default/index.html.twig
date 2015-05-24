@@ -34,19 +34,22 @@
                 The data is retrieved from a di.fm api, so the channels will always be up to date!
             </p>
 
-            <div class="row">
-                <div class="col-lg-8 col-sm-12">
-                    <div class="panel panel-primary">
+            <div class="row container-fluid">
+                <div class="col-lg-12 col-sm-12">
+                    <div class="panel panel-primary row">
                         <div class="panel-heading">
                             <h3 class="panel-title">Download playlist</h3>
                         </div>
-                        <div class="panel-body home-block">
-                            <div class="form-group">
+                        <div class="panel-body row">
+                            {% for error in errors %}
+                            <div class="alert alert-danger">{{ error }}</div>
+                            {% endfor %}
+                            <div class="form-group col-lg-12 col-sm-12">
                                 <label>URI / Bookmark</label>
                                 <br/>
                                 <a id="permaLink" href=""></a>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group col-lg-12 col-sm-12">
                                 <label for="listenKey">DI.fm Listen key <span
                                             class="glyphicon glyphicon-question-sign text-info"
                                             title="Find your listen key in under Player Settings"> </span>
@@ -54,7 +57,7 @@
                                 <input id="listenKey" name="listenKey" class="pull-right input-difm form-control"
                                        placeholder="3x4mpl3"/>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group col-lg-6 col-sm-12">
                                 <div id="has_premium" class="btn-group btn-group-justified" data-toggle="buttons">
                                     <label class="btn btn-default active">
                                         <input type="radio" name="premium" value="0" id="free" checked>
@@ -66,7 +69,7 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group col-lg-6 col-sm-12">
                                 <div id="type" class="btn-group btn-group-justified" data-toggle="buttons">
                                     <label class="btn btn-default active">
                                         <input type="radio" name="type" value="pls" id="pls" checked>
@@ -78,7 +81,7 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group col-lg-12 col-sm-12">
                                 <div id="site" class="btn-group btn-group-justified" data-toggle="buttons">
                                     <label class="btn btn-default active">
                                         <input type="radio" name="site" value="difm" id="difm" checked>
@@ -114,36 +117,12 @@ Next update: {{ rrNextUpdate }}"># {{ rrChannelCount }}</span>
                                     </label>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group col-lg-12 col-sm-12">
                                 <button id="generateBtn" class="btn btn-primary">
                                     <span class="glyphicon glyphicon-music"> Download</span>
                                 </button>
-                                <br/><br/>
-                                <a href="http://www.di.fm/" target="_blank">Create di.fm account (14d premium trial)</a>
+                                <a class="pull-right" href="http://www.di.fm/" target="_blank"> Create di.fm account (14d premium trial)</a>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-12">
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Roadmap</h3>
-                        </div>
-                        <div class="panel-body home-block">
-                            <ul class="list-group">
-                                <li class="list-group-item"><span class="glyphicon glyphicon-wrench"></span> Make
-                                    prettier interface
-                                </li>
-                                <li class="list-group-item"><span class="glyphicon glyphicon-wrench"></span> Add quality
-                                    options
-                                </li>
-                                <li class="list-group-item"><span class="glyphicon glyphicon-wrench"></span> Add support
-                                    for other audioaddict sites
-                                </li>
-                                <li class="list-group-item"><span class="glyphicon glyphicon-wrench"></span> Listen to
-                                    your feedback (see github)
-                                </li>
-                            </ul>
                         </div>
                     </div>
                 </div>

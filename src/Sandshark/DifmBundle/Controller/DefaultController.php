@@ -4,8 +4,10 @@ namespace Sandshark\DifmBundle\Controller;
 
 use Sandshark\DifmBundle\Playlist\PlaylistFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 /**
@@ -21,6 +23,8 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
+        $session = new Session();
+        $session->start();
         $digitallyImported = $this->get('channel_difm');
         $radioTunes = $this->get('channel_radiotunes');
         $jazzRadio = $this->get('channel_jazzradio');
@@ -40,7 +44,8 @@ class DefaultController extends Controller
                 'jrNextUpdate'   => $jazzRadio->expiresAt(),
                 'rrChannelCount' => $rockRadio->getChannelCount(),
                 'rrCacheDate'    => $rockRadio->cachedAt(),
-                'rrNextUpdate'   => $rockRadio->expiresAt()
+                'rrNextUpdate'   => $rockRadio->expiresAt(),
+                'errors'         => $session->getFlashBag()->get('error', array())
             )
         );
     }
@@ -60,6 +65,12 @@ class DefaultController extends Controller
         $key = preg_replace('/[^\da-z]/', '', $key);
         $format = $request->get('_format');
         $channels = null;
+        if ($premium && empty($key)) {
+            $session = new Session();
+            $session->start();
+            $session->getFlashBag()->add('error', 'Premium key is required when premium is selected');
+            return new RedirectResponse($this->generateUrl('sandshark_difm_homepage'));
+        }
         if ($site === 'difm') {
             $channels = $this->get('channel_difm')
                 ->getChannels();
