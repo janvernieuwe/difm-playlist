@@ -36,8 +36,8 @@ class DefaultController extends Controller
 
     /**
      * Class constructor
-     * @param $listenKey
-     * @param $format
+     * @param string $listenKey
+     * @param string $format
      * @param string $premium
      * @param string $site
      * @return Response
