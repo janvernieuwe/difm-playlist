@@ -41,6 +41,18 @@ class ConnectionChecker extends WebTestCase
     private static $radioTunes;
 
     /**
+     * Jazz Radio channel provider
+     * @var ChannelProvider
+     */
+    private static $jazzRadio;
+
+    /**
+     * Rock Radio channel provider
+     * @var ChannelProvider
+     */
+    private static $rockRadio;
+
+    /**
      * @var Client
      */
     private static $client;
@@ -51,6 +63,12 @@ class ConnectionChecker extends WebTestCase
      */
     private static $key;
 
+    /**
+     * @var bool
+     * only check the first channel
+     */
+    private static $single = false;
+
     public static function setUpBeforeClass()
     {
         static::$kernel = static::createKernel();
@@ -58,6 +76,8 @@ class ConnectionChecker extends WebTestCase
         static::$container = static::$kernel->getContainer();
         static::$difm = static::$container->get('channel_difm');
         static::$radioTunes = static::$container->get('channel_radiotunes');
+        static::$jazzRadio = static::$container->get('channel_jazzradio');
+        static::$rockRadio = static::$container->get('channel_rockradio');
         self::$client = new Client();
         self::$key = static::$container->getParameter('premium_key');
         if (empty(self::$key)) {
@@ -71,7 +91,7 @@ class ConnectionChecker extends WebTestCase
     private function checkConnection(Channel $channel, $premium)
     {
         $url = $channel->getStreamUrl($premium, $premium ? self::$key : '');
-        $stream = self::$client->get($url, ['stream' => true]);
+        $stream = self::$client->get($url, ['stream' => true, 'timeout' => 3]);
         $strPremium = $premium ? ' (premium)' : '';
         $this->assertEquals(
             200,
@@ -92,7 +112,7 @@ class ConnectionChecker extends WebTestCase
             );
         }
         echo PHP_EOL;
-        //ob_flush();
+        //ob_flush(); // for the impatient ones
         sleep(self::SLEEP);
     }
 
@@ -102,6 +122,9 @@ class ConnectionChecker extends WebTestCase
         foreach ($channels as $channel) {
             $this->checkConnection($channel, false);
             $this->checkConnection($channel, true);
+            if (self::$single) {
+                break;
+            }
         }
     }
 
@@ -111,6 +134,33 @@ class ConnectionChecker extends WebTestCase
         foreach ($channels as $channel) {
             $this->checkConnection($channel, false);
             $this->checkConnection($channel, true);
+            if (self::$single) {
+                break;
+            }
+        }
+    }
+
+    public function testJazzRadio()
+    {
+        $channels = self::$jazzRadio->getChannels();
+        foreach ($channels as $channel) {
+            $this->checkConnection($channel, false);
+            $this->checkConnection($channel, true);
+            if (self::$single) {
+                break;
+            }
+        }
+    }
+
+    public function testRockRadioRadio()
+    {
+        $channels = self::$rockRadio->getChannels();
+        foreach ($channels as $channel) {
+            $this->checkConnection($channel, false);
+            $this->checkConnection($channel, true);
+            if (self::$single) {
+                break;
+            }
         }
     }
 }

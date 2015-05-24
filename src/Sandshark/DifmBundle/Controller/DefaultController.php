@@ -23,6 +23,8 @@ class DefaultController extends Controller
     {
         $digitallyImported = $this->get('channel_difm');
         $radioTunes = $this->get('channel_radiotunes');
+        $jazzRadio = $this->get('channel_jazzradio');
+        $rockRadio = $this->get('channel_rockradio');
 
         return $this->render(
             '@SandsharkDifm/Default/index.html.twig',
@@ -32,7 +34,13 @@ class DefaultController extends Controller
                 'diNextUpdate'   => $digitallyImported->expiresAt(),
                 'rtChannelCount' => $radioTunes->getChannelCount(),
                 'rtCacheDate'    => $radioTunes->cachedAt(),
-                'rtNextUpdate'   => $radioTunes->expiresAt()
+                'rtNextUpdate'   => $radioTunes->expiresAt(),
+                'jrChannelCount' => $jazzRadio->getChannelCount(),
+                'jrCacheDate'    => $jazzRadio->cachedAt(),
+                'jrNextUpdate'   => $jazzRadio->expiresAt(),
+                'rrChannelCount' => $rockRadio->getChannelCount(),
+                'rrCacheDate'    => $rockRadio->cachedAt(),
+                'rrNextUpdate'   => $rockRadio->expiresAt()
             )
         );
     }
@@ -60,9 +68,18 @@ class DefaultController extends Controller
             $channels = $this->get('channel_radiotunes')
                 ->getChannels();
         }
+        if ($site === 'jazzradio') {
+            $channels = $this->get('channel_jazzradio')
+                ->getChannels();
+        }
+        if ($site === 'rockradio') {
+            $channels = $this->get('channel_rockradio')
+                ->getChannels();
+        }
         if (is_null($channels)) {
             throw new ResourceNotFoundException(sprintf('Site %s is not supported', $site));
         }
+
         $playlist = PlaylistFactory::create($format, $channels)
             ->setListenKey($key)
             ->setPremium($premium)
