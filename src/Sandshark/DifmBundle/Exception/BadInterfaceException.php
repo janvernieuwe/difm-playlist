@@ -11,7 +11,7 @@ namespace Sandshark\DifmBundle\Exception;
 /**
  * Class BadInterfaceException
  * Throw an exception that an interface is not implemented
- * @package Sanoma\ReadAndView\ReadAndViewBundle\Exception
+ * @package Sandshark\DifmBundle\Exception
  */
 class BadInterfaceException extends \Exception
 {
