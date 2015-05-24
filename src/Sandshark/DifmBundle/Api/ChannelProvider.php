@@ -10,7 +10,6 @@ namespace Sandshark\DifmBundle\Api;
 
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Message\FutureResponse;
-use Sandshark\DifmBundle\Entity\Channel;
 use Symfony\Component\DependencyInjection\Container;
 
 /**
@@ -119,14 +118,6 @@ class ChannelProvider
         }
         $timestamp = strtotime($timestamp);
         return date('Y-m-d H:i:s', $timestamp + self::CACHE_LIFETIME);
-    }
-
-    /**
-     * @param Channel $channel
-     * @param bool $premium
-     */
-    public function getPlaylist(Channel $channel, $premium = false)
-    {
     }
 
     /**

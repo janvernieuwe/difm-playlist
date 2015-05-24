@@ -57,7 +57,6 @@ class Channel
      */
     private $channelPlaylist;
 
-
     /**
      * Get id
      * @return integer
@@ -135,6 +134,7 @@ class Channel
      */
     public function getStreamUrl($premium, $key = '')
     {
+
         $premium = (bool)$premium;
         if ($premium && empty($key)) {
             throw new InvalidArgumentException('listenKey is required when premium');
@@ -142,22 +142,33 @@ class Channel
         $key = is_null($key) ? '' : '?' . $key;
         // Premium
         if ($premium) {
+            $qualityMap = array(
+                'di.fm' => 'hi',
+                'radiotunes.com' => 'hi',
+                'jazzradio.com' => 'low',
+                'rockradio.com' => 'low'
+            );
+            $quality = $qualityMap[$this->getDomain()];
             return sprintf(
                 'http://%s:80/%s_%s%s',
                 $this->getHostName($premium),
                 $this->getStreamKey($premium),
-                'hi',
+                $quality,
                 $key
             );
         }
-        $prefix = explode('.', $this->getDomain());
-        $prefix = array_shift($prefix);
+        $prefixMap = array(
+            'di.fm' => 'di',
+            'radiotunes.com' => 'radiotunes',
+            'jazzradio.com' => 'jr',
+            'rockradio.com' => 'rr'
+        );
+        $prefix = $prefixMap[$this->getDomain()];
         return sprintf(
-            'http://%s/%s_%s_%s%s',
+            'http://%s:80/%s_%s_aacplus%s',
             $this->getHostName($premium),
             $prefix,
             $this->getStreamKey($premium),
-            'aac',
             $key
         );
     }
@@ -173,6 +184,8 @@ class Channel
         $sub = $premium ? 'prem' : 'pub';
         if ($domain === 'di.fm') {
             $id = $premium ? rand(1, 4) : rand(1, 8);
+        } elseif ($domain === 'rockradio.com') {
+            $id = $premium ? rand(1, 4) : 7;
         } else {
             $id = $premium ? rand(1, 4) : rand(1, 6);
         }

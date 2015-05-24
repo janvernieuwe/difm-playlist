@@ -8,8 +8,6 @@
 
 namespace Sandshark\DifmBundle\Playlist;
 
-use Sandshark\DifmBundle\Entity\Channel;
-
 /**
  * Class Pls
  * @package Sandshark\DifmBundle\Playlist
@@ -25,7 +23,6 @@ class M3u extends AbstractPlaylist implements PlaylistInterface
     {
         $lines = array();
         $lines[] = '#EXTM3U';
-        /** @var Channel $channel $channel */
         foreach ($this->channels as $channel) {
             $lines[] = sprintf('#EXTINF:-1,%s', $channel->getChannelName());
             $lines[] = $channel->getStreamUrl($this->premium, $this->listenKey);

@@ -35,7 +35,7 @@
             </p>
 
             <div class="row">
-                <div class="col-lg-6 col-sm-12">
+                <div class="col-lg-8 col-sm-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h3 class="panel-title">Download playlist</h3>
@@ -98,16 +98,20 @@ Next update: {{ diNextUpdate }}"># {{ diChannelCount }}</span>
 Cached on:      {{ rtCacheDate }}
 Next update: {{ rtNextUpdate }}"># {{ rtChannelCount }}</span>
                                     </label>
-                                    {#
                                     <label class="btn btn-default">
                                         <input type="radio" name="site" value="jazzradio" id="radiotunes">
                                         <strong>JazzRadio</strong>
+                                        <span class="badge" title="Channel Count;
+Cached on:      {{ jrCacheDate }}
+Next update: {{ jrNextUpdate }}"># {{ jrChannelCount }}</span>
                                     </label>
                                     <label class="btn btn-default">
                                         <input type="radio" name="site" value="rockradio" id="radiotunes">
                                         <strong>RockRadio</strong>
+                                        <span class="badge" title="Channel Count;
+Cached on:      {{ rrCacheDate }}
+Next update: {{ rrNextUpdate }}"># {{ rrChannelCount }}</span>
                                     </label>
-                                    #}
                                 </div>
                             </div>
                             <div class="form-group">
@@ -120,7 +124,7 @@ Next update: {{ rtNextUpdate }}"># {{ rtChannelCount }}</span>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 col-sm-12">
+                <div class="col-lg-4 col-sm-12">
                     <div class="panel panel-info">
                         <div class="panel-heading">
                             <h3 class="panel-title">Roadmap</h3>
