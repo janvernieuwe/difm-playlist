@@ -155,7 +155,10 @@ class PlaylistConfiguration
     public function isPremiumKeyValid(ExecutionContext $context)
     {
         if ($this->premium && empty($this->listenKey)) {
-            $context->addViolationAt('listenKey', 'Premium listen key is required when the premium option is selected.');
+            $context->addViolationAt(
+                'listenKey',
+                'Premium listen key is required when the premium option is selected.'
+            );
         }
     }
 

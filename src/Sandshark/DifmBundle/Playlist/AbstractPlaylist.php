@@ -20,7 +20,7 @@ use Symfony\Component\Validator\Exception\InvalidArgumentException;
  * Class AbstractPlaylist
  * @package Sandshark\DifmBundle\Playlist
  */
-class AbstractPlaylist
+abstract class AbstractPlaylist implements PlaylistInterface
 {
     /**
      * Collection of objects representing channels

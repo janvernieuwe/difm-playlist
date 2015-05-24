@@ -25,6 +25,7 @@ interface PlaylistInterface
 
     /**
      * Generate the playlist and return the string
+     * @param null $data
      * @return Response
      */
     public function render($data = null);

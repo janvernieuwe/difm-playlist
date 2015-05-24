@@ -3,10 +3,8 @@
 namespace Sandshark\DifmBundle\Controller;
 
 use Sandshark\DifmBundle\Entity\PlaylistConfiguration;
-use Sandshark\DifmBundle\Playlist\PlaylistProvider;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -39,6 +37,7 @@ class DefaultController extends Controller
     /**
      * Class constructor
      * @param $listenKey
+     * @param $format
      * @param string $premium
      * @param string $site
      * @return Response
@@ -53,22 +52,12 @@ class DefaultController extends Controller
         $errors = $this->get('validator')
             ->validate($playlistConfig);
         if (count($errors)) {
-            $this->setFlashMessage('error', (string) $errors);
+            $session = $this->get('session');
+            $session->getFlashBag()->add('error', (string) $errors);
             return new RedirectResponse($this->generateUrl('sandshark_difm_homepage'));
         }
         return $this->get('difm_provider.playlist')
             ->create($playlistConfig)
             ->render();
-    }
-
-    /**
-     * Gets the session and sets the message in the FlashBag
-     * @param string $type
-     * @param string $msg
-     */
-    private function setFlashMessage($type, $msg)
-    {
-        $session = $this->get('session');
-        $session->getFlashBag()->add($type, $msg);
     }
 }
