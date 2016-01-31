@@ -1,4 +1,39 @@
 services:
-#    difm.example:
-#        class: DifmBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
+    # Cache configuration
+    app.cacheprovider:
+        class: Doctrine\Common\Cache\FilesystemCache
+        arguments: ['%kernel.cache_dir%/cache/difm']
+    app.cachehandler:
+        class: Concat\Http\Handler\CacheHandler
+        arguments:
+            - '@app.cacheprovider'
+            - null
+            - {methods: ['GET'], expire: 60*60*12}
+    # di.fm configuration
+    difm.client:
+        class: GuzzleHttp\Client
+        arguments: [{handler: '@app.cachehandler', base_uri: '%difm.url%'}]
+    difm.channels:
+      class: DifmBundle\Api\Channels
+      arguments: ['@difm.client']
+    # radiotunes configuration
+    radiotunes.client:
+        class: GuzzleHttp\Client
+        arguments: [{handler: '@app.cachehandler', base_uri: '%radiotunes.url%'}]
+    radiotunes.channels:
+      class: DifmBundle\Api\Channels
+      arguments: ['@radiotunes.client']
+    # jazzradio configuration
+    jazzradio.client:
+        class: GuzzleHttp\Client
+        arguments: [{handler: '@app.cachehandler', base_uri: '%jazzradio.url%'}]
+    jazzradio.channels:
+      class: DifmBundle\Api\Channels
+      arguments: ['@jazzradio.client']
+    # rockradio configuration
+    rockradio.client:
+        class: GuzzleHttp\Client
+        arguments: [{handler: '@app.cachehandler', base_uri: '%rockradio.url%'}]
+    rockradio.channels:
+      class: DifmBundle\Api\Channels
+      arguments: ['@rockradio.client']

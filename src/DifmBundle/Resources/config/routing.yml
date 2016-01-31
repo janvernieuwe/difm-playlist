@@ -1,3 +1,6 @@
 difm_homepage:
     path:     /
     defaults: { _controller: DifmBundle:Default:index }
+difm_download:
+    path:     /{station}/{key}.{_format}
+    defaults: { _controller: DifmBundle:Default:download }

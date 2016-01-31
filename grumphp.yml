@@ -1,4 +1,15 @@
 parameters:
     git_dir: .
     bin_dir: ./vendor/bin
-    tasks: {  }
+    tasks:
+      phpcs:
+        standard: PSR2
+        ignore_patterns:
+          - "web/*"
+          - "app/*"
+      phpunit:
+        config_file: phpunit.xml
+      yamllint: ~
+      xmllint: ~
+      jsonlint: ~
+
