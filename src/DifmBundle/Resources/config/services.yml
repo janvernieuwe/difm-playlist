@@ -2,7 +2,7 @@ services:
     # Cache configuration
     app.cacheprovider:
         class: Doctrine\Common\Cache\FilesystemCache
-        arguments: ['%kernel.cache_dir%/cache/difm']
+        arguments: ['%kernel.cache_dir%/difm']
     app.cachehandler:
         class: Concat\Http\Handler\CacheHandler
         arguments:
