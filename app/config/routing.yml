@@ -1,0 +1,3 @@
+difm:
+    resource: "@DifmBundle/Resources/config/routing.yml"
+    prefix:   /

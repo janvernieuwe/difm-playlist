@@ -1,0 +1,4 @@
+services:
+#    difm.example:
+#        class: DifmBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
