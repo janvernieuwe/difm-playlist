@@ -111,25 +111,25 @@ class Channel
 
     /**
      * Get the url for streaming.
-     * @param bool   $premium
+     * @param bool $premium
      * @param string $key
      * @return string
      */
     public function getStreamUrl($premium, $key = ''/*, $bitRate = 96*/)
     {
-        $premium = (bool) $premium;
+        $premium = (bool)$premium;
         if ($premium && empty($key)) {
             throw new InvalidArgumentException('listenKey is required when premium');
         }
-        $key = is_null($key) ? '' : '?'.$key;
+        $key = is_null($key) ? '' : '?' . $key;
         // Premium
         if ($premium) {
             //$quality = $this->bitRateMap[$this->s]
             $qualityMap = [
-                'di.fm' => 'hi',
+                'di.fm'          => 'hi',
                 'radiotunes.com' => 'hi',
-                'jazzradio.com' => 'low',
-                'rockradio.com' => 'low',
+                'jazzradio.com'  => 'low',
+                'rockradio.com'  => 'low',
             ];
             $quality = $qualityMap[$this->getDomain()];
 
@@ -142,10 +142,10 @@ class Channel
             );
         }
         $prefixMap = [
-            'di.fm' => 'di',
+            'di.fm'          => 'di',
             'radiotunes.com' => 'radiotunes',
-            'jazzradio.com' => 'jr',
-            'rockradio.com' => 'rr',
+            'jazzradio.com'  => 'jr',
+            'rockradio.com'  => 'rr',
         ];
         $prefix = $prefixMap[$this->getDomain()];
         return sprintf(
@@ -155,6 +155,17 @@ class Channel
             $this->getStreamKey($premium),
             $key
         );
+    }
+
+    /**
+     * Get domain name from playlist.
+     * @return string
+     */
+    public function getDomain()
+    {
+        $url = parse_url($this->channelPlaylist);
+
+        return (string)str_replace('listen.', '', $url['host']);
     }
 
     /**
@@ -178,17 +189,6 @@ class Channel
     }
 
     /**
-     * Get domain name from playlist.
-     * @return string
-     */
-    public function getDomain()
-    {
-        $url = parse_url($this->channelPlaylist);
-
-        return (string) str_replace('listen.', '', $url['host']);
-    }
-
-    /**
      * Get the stream key that keeps in mind the various exceptions.
      * @param bool $premium
      * @return string
@@ -199,20 +199,20 @@ class Channel
         $keyMap = [];
         if ($host === 'di.fm') {
             $keyMap = [
-                'club' => $premium ? 'club' : 'clubsounds',
-                'electro' => 'electrohouse',
+                'club'          => $premium ? 'club' : 'clubsounds',
+                'electro'       => 'electrohouse',
                 'classictechno' => $premium ? 'classicelectronica' : 'oldschoolelectronica',
             ];
         }
         if ($host === 'radiotunes.com') {
             $keyMap = [
-                'ambient' => 'rtambient',
-                'chillout' => 'rtchillout',
+                'ambient'         => 'rtambient',
+                'chillout'        => 'rtchillout',
                 'downtempolounge' => 'rtdowntempolounge',
-                'eurodance' => 'rteurodance',
-                'lounge' => 'rtlounge',
-                'vocalchillout' => 'rtvocalchillout',
-                'vocallounge' => 'rtvocallounge',
+                'eurodance'       => 'rteurodance',
+                'lounge'          => 'rtlounge',
+                'vocalchillout'   => 'rtvocalchillout',
+                'vocallounge'     => 'rtvocallounge',
             ];
         }
         $key = $this->getChannelKey();

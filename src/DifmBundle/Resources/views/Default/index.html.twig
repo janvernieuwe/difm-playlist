@@ -1,1 +1,86 @@
-Hello World!
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/difm/css/bootstrap.min.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/difm/css/cyborg.min.css') }}"/>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('bundles/difm/js/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/difm/js/playlist.js') }}"></script>
+{% endblock %}
+
+{% block title %}DI.fm all channels playlist{% endblock %}
+
+{% block body %}
+    <div class="col-lg-4"></div>
+    <div class="col-lg-4 well bs-component">
+        <h3>DI.fm download all channels playlist</h3>
+        <p>
+            Also want a di.fm playlist of all channels, without having to add them all to your favorites? Then this might
+            be a solution for you. I have created a little script that generates .pls and .m3u playlists by entering
+            your listen key. The data is retrieved from a di.fm api, so the channels will always be up to date!
+        </p>
+        <p class="text-warning">
+            Non-premium listening is unfortunately no longer possible due to changes in regulations / fees.
+            You can still listen for free on the website or with the app, but no longer in the player of your choice.
+        </p>
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label for="key" class="col-lg-2 control-label">Listen key</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" id="key" placeholder="4n3x4mpl3k3y">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="station" class="col-lg-2 control-label">Station</label>
+                <div class="col-lg-10">
+                    <select class="form-control" id="station">
+                        <option value="difm">Digitally Imported ({{ difm|length }} channels)</option>
+                        <option value="jazzradio">Jazz Radio ({{ jazzradio|length }} channels)</option>
+                        <option value="radiotunes">Radio Tunes ({{ radiotunes|length }} channels)</option>
+                        <option value="rockradio">Rock Radio ({{ rockradio|length }} channels)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Format</label>
+                <div class="col-lg-10">
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" value="pls" checked="">
+                            .plz
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" value="m3u">
+                            .m3u
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-lg-10 col-lg-offset-2">
+                    <button id="download" class="btn btn-primary">Download</button>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <a href="http://www.di.fm/" target="_blank"> Create di.fm account (14d premium trial)</a>
+            </div>
+
+        </form>
+        <small class="text-center col-lg-12 col-sm-12 footer">
+            Copyright © 2016 <a href="http://sandshark.be">sandshark.be</a>
+            |
+            <a href="https://github.com/janvernieuwe/difm-playlist/blob/master/LICENSE">MIT Licence</a>
+            |
+            <a href="https://github.com/janvernieuwe/difm-playlist" target="_blank">github page</a>
+        </small>
+    </div>
+    <div class="col-lg-4"></div>
+{% endblock %}

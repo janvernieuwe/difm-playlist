@@ -11,7 +11,15 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('::base.html.twig');
+        return $this->render(
+            'DifmBundle:Default:index.html.twig',
+            [
+                'difm'       => $this->get('difm.channels')->loadChannels(),
+                'rockradio'  => $this->get('rockradio.channels')->loadChannels(),
+                'jazzradio'  => $this->get('jazzradio.channels')->loadChannels(),
+                'radiotunes' => $this->get('radiotunes.channels')->loadChannels()
+            ]
+        );
     }
 
     public function downloadAction($station, $key, $_format)

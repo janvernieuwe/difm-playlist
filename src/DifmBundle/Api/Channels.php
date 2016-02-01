@@ -29,7 +29,7 @@ class Channels
 
     /**
      * Loads channels response
-     * @return mixed|\Psr\Http\Message\ResponseInterface
+     * @return Channel[]
      */
     public function loadChannels()
     {
