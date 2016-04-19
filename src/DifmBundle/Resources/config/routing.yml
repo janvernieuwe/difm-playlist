@@ -3,10 +3,11 @@ difm_homepage:
     defaults: { _controller: DifmBundle:Default:index }
     methods: [GET]
 difm_download:
-    path:     /{station}/{key}.{_format}
+    path:     /{station}/{quality}/{key}.{_format}
     requirements:
       station: difm|rockradio|jazzradio|radiotunes
       key: \w+
+      quality: 320|128|64|40
       _format: pls|m3u
     methods: [GET]
     defaults: { _controller: DifmBundle:Default:download }

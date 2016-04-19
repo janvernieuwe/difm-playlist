@@ -115,7 +115,7 @@ class Channel
      * @param string $key
      * @return string
      */
-    public function getStreamUrl($premium, $key = ''/*, $bitRate = 96*/)
+    public function getStreamUrl($premium, $key = '', $quality = '_hi')
     {
         $premium = (bool)$premium;
         if ($premium && empty($key)) {
@@ -125,16 +125,16 @@ class Channel
         // Premium
         if ($premium) {
             //$quality = $this->bitRateMap[$this->s]
-            $qualityMap = [
-                'di.fm'          => 'hi',
-                'radiotunes.com' => 'hi',
-                'jazzradio.com'  => 'low',
-                'rockradio.com'  => 'low',
-            ];
-            $quality = $qualityMap[$this->getDomain()];
+//            $qualityMap = [
+//                'di.fm'          => 'hi',
+//                'radiotunes.com' => 'hi',
+//                'jazzradio.com'  => 'low',
+//                'rockradio.com'  => 'low',
+//            ];
+//            $quality = $qualityMap[$this->getDomain()];
 
             return sprintf(
-                'http://%s:80/%s_%s%s',
+                'http://%s:80/%s%s%s',
                 $this->getHostName($premium),
                 $this->getStreamKey($premium),
                 $quality,

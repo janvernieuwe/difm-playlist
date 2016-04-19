@@ -82,9 +82,11 @@ class ConnectionChecker extends WebTestCase
     {
         $channels = self::$difm->loadChannels();
         foreach ($channels as $channel) {
-            $this->checkConnection($channel, true);
-            if (self::$single) {
-                break;
+            foreach (['_hi','','_aac','_aacp'] as $quality) {
+                $this->checkConnection($channel, true, $quality);
+                if (self::$single) {
+                    break;
+                }
             }
         }
     }
@@ -92,31 +94,34 @@ class ConnectionChecker extends WebTestCase
     /**
      * @param Channel $channel
      * @param $premium
+     * @param $quality
      */
-    private function checkConnection(Channel $channel, $premium)
+    private function checkConnection(Channel $channel, $premium, $quality)
     {
-        $url = $channel->getStreamUrl($premium, $premium ? self::$key : '');
+        $url = $channel->getStreamUrl($premium, $premium ? self::$key : '', $quality);
         $promise = self::$client->getAsync($url, ['stream' => true, 'timeout' => 3]);
         $promise
             ->then(
-                function (ResponseInterface $response) use ($premium, $channel) {
+                function (ResponseInterface $response) use ($premium, $channel, $quality) {
                     $strPremium = $premium ? ' (premium)' : '';
                     $this->assertEquals(
                         200,
                         (int)$response->getStatusCode(),
                         sprintf(
-                            '[FAIL] %s %s%s',
+                            '[FAIL] %s %s%s %s',
                             $channel->getDomain(),
                             $channel->getChannelName(),
-                            $strPremium
+                            $strPremium,
+                            $quality
                         )
                     );
                     if (200 === $response->getStatusCode()) {
                         echo sprintf(
-                            '[PASS] %s %s%s',
+                            '[PASS] %s %s%s %s',
                             $channel->getDomain(),
                             $channel->getChannelName(),
-                            $strPremium
+                            $strPremium,
+                            $quality
                         );
                     }
                     echo PHP_EOL;
@@ -128,9 +133,11 @@ class ConnectionChecker extends WebTestCase
     {
         $channels = self::$radioTunes->loadChannels();
         foreach ($channels as $channel) {
-            $this->checkConnection($channel, true);
-            if (self::$single) {
-                break;
+            foreach (['','_aac','_aacp'] as $quality) {
+                $this->checkConnection($channel, true, $quality);
+                if (self::$single) {
+                    break;
+                }
             }
         }
     }
@@ -139,9 +146,11 @@ class ConnectionChecker extends WebTestCase
     {
         $channels = self::$jazzRadio->loadChannels();
         foreach ($channels as $channel) {
-            $this->checkConnection($channel, true);
-            if (self::$single) {
-                break;
+            foreach (['','_aac','_aacp'] as $quality) {
+                $this->checkConnection($channel, true, $quality);
+                if (self::$single) {
+                    break;
+                }
             }
         }
     }
@@ -150,9 +159,11 @@ class ConnectionChecker extends WebTestCase
     {
         $channels = self::$rockRadio->loadChannels();
         foreach ($channels as $channel) {
-            $this->checkConnection($channel, true);
-            if (self::$single) {
-                break;
+            foreach (['','_aac','_aacp'] as $quality) {
+                $this->checkConnection($channel, true, $quality);
+                if (self::$single) {
+                    break;
+                }
             }
         }
     }

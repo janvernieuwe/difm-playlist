@@ -20,13 +20,14 @@ class Pls extends AbstractPlaylist implements PlaylistInterface
             $lines[] = sprintf(
                 'File%d=%s',
                 $i,
-                $channel->getStreamUrl($this->premium, $this->listenKey)
+                $channel->getStreamUrl($this->premium, $this->listenKey, $this->quality)
             );
             $lines[] = sprintf('Title%d=%s', $i, $channel->getChannelName());
             $lines[] = sprintf('Length%d=-1', $i);
         }
         $lines[] = 'Version=2';
         $data = implode("\n", $lines);
+
         return parent::render($data);
     }
 

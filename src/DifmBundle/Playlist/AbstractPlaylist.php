@@ -63,6 +63,7 @@ abstract class AbstractPlaylist implements PlaylistInterface
             throw new InvalidArgumentException(sprintf('Invalid listen key \'%s\'', $listenKey));
         }
         $this->listenKey = $listenKey;
+
         return $this;
     }
 
@@ -74,6 +75,7 @@ abstract class AbstractPlaylist implements PlaylistInterface
     public function setPremium($premium)
     {
         $this->premium = (bool)$premium;
+
         return $this;
     }
 
@@ -84,7 +86,14 @@ abstract class AbstractPlaylist implements PlaylistInterface
      */
     public function setQuality($quality)
     {
-        $this->quality = $quality;
+        $map = [
+            320 => '_hi',
+            128 => '',
+            64  => '_aac',
+            40  => '_aacp',
+        ];
+        $this->quality = $map[$quality];
+
         return $this;
     }
 
@@ -96,6 +105,7 @@ abstract class AbstractPlaylist implements PlaylistInterface
     public function setSite($site)
     {
         $this->site = (string)$site;
+
         return $this;
     }
 
@@ -110,7 +120,7 @@ abstract class AbstractPlaylist implements PlaylistInterface
             200,
             [
                 'content-type'        => $this->getContentType(),
-                'content-disposition' => 'attachment; filename=' . $this->getFileName(),
+                'content-disposition' => 'attachment; filename='.$this->getFileName(),
             ]
         );
     }
@@ -125,6 +135,7 @@ abstract class AbstractPlaylist implements PlaylistInterface
         preg_match('/\w*$/i', $className, $extension);
         $extension = strtolower($extension[0]);
         $key = empty($this->listenKey) ? '' : "_$this->listenKey";
+
         return sprintf('%s_%s%s.%s', date('Y-m-d'), $this->site, $key, $extension);
     }
 }
