@@ -6,6 +6,10 @@ use DifmBundle\Entity\Channel;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 
+/**
+ * Class Channels
+ * @package DifmBundle\Api
+ */
 class Channels
 {
     /**
@@ -30,6 +34,7 @@ class Channels
     /**
      * Loads channels response
      * @return Channel[]
+     * @throws \InvalidArgumentException
      */
     public function loadChannels()
     {

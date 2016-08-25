@@ -37,3 +37,10 @@ services:
     rockradio.channels:
       class: DifmBundle\Api\Channels
       arguments: ['@rockradio.client']
+    # classicalradio configuration
+    classicalradio.client:
+        class: GuzzleHttp\Client
+        arguments: [{handler: '@app.cachehandler', base_uri: '%classicalradio.url%'}]
+    classicalradio.channels:
+      class: DifmBundle\Api\Channels
+      arguments: ['@classicalradio.client']

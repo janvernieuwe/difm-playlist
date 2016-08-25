@@ -48,6 +48,13 @@ class ConnectionChecker extends WebTestCase
     private static $rockRadio;
 
     /**
+     * Classical Radio channel provider.
+     *
+     * @var Channels
+     */
+    private static $classicalRadio;
+
+    /**
      * @var Client
      */
     private static $client;
@@ -74,6 +81,7 @@ class ConnectionChecker extends WebTestCase
         static::$radioTunes = static::$container->get('radiotunes.channels');
         static::$jazzRadio = static::$container->get('jazzradio.channels');
         static::$rockRadio = static::$container->get('rockradio.channels');
+        static::$classicalRadio = static::$container->get('classicalradio.channels');
         self::$client = new Client();
         self::$key = self::$container->getParameter('listenKey');
     }
@@ -158,6 +166,20 @@ class ConnectionChecker extends WebTestCase
     public function testRockRadio()
     {
         $channels = self::$rockRadio->loadChannels();
+        foreach ($channels as $channel) {
+            foreach (['','_aac','_aacp'] as $quality) {
+                $this->checkConnection($channel, true, $quality);
+                if (self::$single) {
+                    break;
+                }
+            }
+        }
+    }
+
+
+    public function testClassicalRadio()
+    {
+        $channels = self::$classicalRadio->loadChannels();
         foreach ($channels as $channel) {
             foreach (['','_aac','_aacp'] as $quality) {
                 $this->checkConnection($channel, true, $quality);

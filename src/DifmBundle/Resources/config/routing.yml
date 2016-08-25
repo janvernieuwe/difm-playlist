@@ -5,7 +5,7 @@ difm_homepage:
 difm_download:
     path:     /{station}/{quality}/{key}.{_format}
     requirements:
-      station: difm|rockradio|jazzradio|radiotunes
+      station: difm|rockradio|jazzradio|radiotunes|classicalradio
       key: \w+
       quality: 320|128|64|40
       _format: pls|m3u

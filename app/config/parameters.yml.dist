@@ -23,5 +23,6 @@ parameters:
     radiotunes.url:     http://listen.radiotunes.com
     jazzradio.url:      http://listen.jazzradio.com
     rockradio.url:      http://listen.rockradio.com
+    classicalradio.url: http://listen.classicalradio.com'
     listenKey:          ImNotSharingThis
 
