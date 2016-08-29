@@ -1,10 +1,10 @@
 (function () {
     Playlist = function () {
-        this.key = $("#key");
-        this.station = $("#station");
-        this.format = $(":input[name='optionsRadios']:checked");
-        this.download = $("#download");
-        this.quality = $("#quality");
+        this.key = "#key";
+        this.station = "#station";
+        this.format = ":input[name='optionsRadios']:checked";
+        this.download = "#download";
+        this.quality = "#quality";
         this.registerHandlers();
     };
 
